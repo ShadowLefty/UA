@@ -2,23 +2,12 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/png" href="https://shadowlefty.github.io/UA/ua-logo.png" />
-  <meta property="og:title" content="U.A. High School – Prova Teórica" />
-  <meta property="og:description" content="Prova oficial do Curso de Formação de Heróis – Setor de Avaliação da U.A. High School." />
-  <meta property="og:url" content="https://shadowlefty.github.io/UA/" />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://shadowlefty.github.io/UA/ua-card.png" />
-  <meta property="og:image:type" content="image/png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="theme-color" content="#00ff9d" />
   <title>U.A. High School – Prova Teórica</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Fontes Google -->
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
-
+  <link rel="icon" type="image/png" href="ua-logo.png" />
   <style>
     :root {
       --ua-green: #1a1a1a;          /* substituiu verde */
@@ -78,7 +67,7 @@
       width: 40px;
       height: 40px;
       border-radius: 9px;
-      border: 2px solid var(--ua-gold);
+      border: 2px solid #00ff9d;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -86,8 +75,9 @@
       font-weight: 700;
       font-size: 1.4rem;
       background: radial-gradient(circle at 30% 20%, #ffffff, #0b1920);
-      color: var(--ua-gold);
+      color: #00ff9d;
       box-shadow: 0 0 12px rgba(0, 255, 157, 0.7);
+      text-decoration: none;
     }
 
     .ua-title {
@@ -347,7 +337,7 @@
   <!-- Barra UA -->
   <header class="ua-navbar">
     <div class="ua-brand">
-      <div class="ua-logo">U.A</div>
+      <a href="home.html" class="ua-logo">U.A</a>
       <div class="ua-title">
         <span class="ua-title-main">U.A. HIGH SCHOOL</span>
         <span class="ua-title-sub">CURSO DE FORMAÇÃO DE HERÓIS</span>
@@ -437,4 +427,3 @@
   </main>
 </body>
 </html>
-
