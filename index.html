@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>U.A. High School – Prova Teórica</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Fontes Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ua-green: #1a1a1a;          /* substituiu verde */
+      --ua-green-dark: #141414;     /* substituiu verde escuro */
+      --ua-gold: #00ff9d;           /* substituiu amarelo */
+      --ua-bg: #050c14;
+      --ua-panel: #0b1724;
+      --ua-accent: #1f3f63;
+      --ua-text: #e7ecf5;
+      --ua-muted: #9ca8c0;
+      --ua-danger: #ff4a4a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 55%),
+        radial-gradient(circle at bottom, rgba(0, 123, 255, 0.12), transparent 55%),
+        var(--ua-bg);
+      color: var(--ua-text);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    /* Barra superior UA */
+    .ua-navbar {
+      background: linear-gradient(90deg, var(--ua-green-dark), var(--ua-green));
+      border-bottom: 2px solid var(--ua-gold);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+      padding: 0.6rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .ua-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .ua-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 9px;
+      border: 2px solid var(--ua-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      background: radial-gradient(circle at 30% 20%, #ffffff, #0b1920);
+      color: var(--ua-gold);
+      box-shadow: 0 0 12px rgba(0, 255, 157, 0.7);
+    }
+
+    .ua-title {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .ua-title-main {
+      font-family: "Oswald", sans-serif;
+      letter-spacing: 0.12em;
+      font-size: 0.92rem;
+      text-transform: uppercase;
+    }
+
+    .ua-title-sub {
+      font-size: 0.75rem;
+      color: var(--ua-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .ua-badge {
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 255, 157, 0.7);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ua-gold);
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(4px);
+    }
+
+    /* Conteúdo principal */
+    .ua-main {
+      max-width: 1100px;
+      width: 100%;
+      margin: 1.5rem auto 2.5rem;
+      padding: 0 1rem;
+    }
+
+    .ua-panel {
+      background: linear-gradient(145deg, rgba(11, 23, 36, 0.98), rgba(6, 12, 20, 0.98));
+      border-radius: 18px;
+      border: 1px solid rgba(140, 164, 204, 0.4);
+      box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(0, 0, 0, 0.7);
+      padding: 1.8rem 1.6rem 1.6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ua-panel::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(0, 255, 157, 0.16), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(0, 255, 163, 0.08), transparent 50%);
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .ua-panel-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(156, 168, 192, 0.5);
+      padding-bottom: 1rem;
+    }
+
+    .ua-panel-left {
+      max-width: 650px;
+    }
+
+    .ua-exam-title {
+      font-family: "Oswald", sans-serif;
+      font-size: 1.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      color: var(--ua-gold);
+    }
+
+    .ua-exam-subtitle {
+      font-size: 0.9rem;
+      color: var(--ua-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .ua-panel-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.8rem;
+      font-size: 0.8rem;
+      color: var(--ua-muted);
+    }
+
+    .ua-chip {
+      padding: 0.18rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(156, 168, 192, 0.6);
+      background: rgba(8, 21, 35, 0.85);
+    }
+
+    .ua-chip strong {
+      color: var(--ua-gold);
+      font-weight: 600;
+    }
+
+    .ua-panel-right {
+      text-align: right;
+      min-width: 160px;
+    }
+
+    .ua-score-box {
+      border-radius: 12px;
+      padding: 0.7rem 0.9rem;
+      background: radial-gradient(circle at 10% 0%, rgba(0, 255, 157, 0.3), rgba(9, 20, 33, 0.98));
+      border: 1px solid rgba(0, 255, 157, 0.6);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.3rem;
+    }
+
+    .ua-score-box span {
+      display: block;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--ua-gold);
+      margin-top: 0.2rem;
+    }
+
+    .ua-difficulty {
+      font-size: 0.75rem;
+      color: var(--ua-muted);
+    }
+
+    /* Avisos da prova */
+    .ua-alert {
+      border-radius: 12px;
+      padding: 0.85rem 0.9rem;
+      margin-bottom: 0.9rem;
+      font-size: 0.85rem;
+      display: flex;
+      gap: 0.6rem;
+      align-items: flex-start;
+    }
+
+    .ua-alert-info {
+      background: rgba(25, 61, 102, 0.7);
+      border: 1px solid rgba(120, 186, 255, 0.8);
+    }
+
+    .ua-alert-danger {
+      background: rgba(84, 19, 26, 0.7);
+      border: 1px solid rgba(255, 102, 102, 0.9);
+    }
+
+    .ua-alert-icon {
+      font-size: 1rem;
+      margin-top: 0.1rem;
+    }
+
+    .ua-alert-text strong {
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 0.78rem;
+      color: #ffffff;
+    }
+
+    .ua-alert-text p {
+      margin-top: 0.14rem;
+      color: var(--ua-text);
+    }
+
+    /* Container do iframe */
+    .ua-form-wrapper {
+      margin-top: 1.3rem;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(120, 145, 190, 0.7);
+      background: #ffffff;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+    }
+
+    .ua-form-frame {
+      width: 100%;
+      min-height: 80vh;
+      border: none;
+      display: block;
+    }
+
+    /* Rodapé */
+    .ua-footer {
+      margin-top: 1.2rem;
+      font-size: 0.78rem;
+      color: var(--ua-muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .ua-footer span {
+      opacity: 0.9;
+    }
+
+    .ua-footer strong {
+      color: var(--ua-gold);
+      font-weight: 600;
+    }
+
+    /* Responsivo */
+    @media (max-width: 768px) {
+      .ua-navbar {
+        padding: 0.6rem 1rem;
+      }
+
+      .ua-main {
+        margin-top: 1rem;
+      }
+
+      .ua-panel {
+        padding: 1.3rem 1.1rem 1.2rem;
+      }
+
+      .ua-exam-title {
+        font-size: 1.4rem;
+        letter-spacing: 0.14em;
+      }
+
+      .ua-panel-header {
+        flex-direction: column;
+      }
+
+      .ua-panel-right {
+        text-align: left;
+      }
+
+      .ua-form-frame {
+        min-height: 90vh;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra UA -->
+  <header class="ua-navbar">
+    <div class="ua-brand">
+      <div class="ua-logo">U.A</div>
+      <div class="ua-title">
+        <span class="ua-title-main">U.A. HIGH SCHOOL</span>
+        <span class="ua-title-sub">CURSO DE FORMAÇÃO DE HERÓIS</span>
+      </div>
+    </div>
+    <div class="ua-badge">
+      Prova oficial &bull; Setor de Avaliação
+    </div>
+  </header>
+
+  <!-- Conteúdo principal -->
+  <main class="ua-main">
+    <section class="ua-panel">
+      <div class="ua-panel-header">
+        <div class="ua-panel-left">
+          <h1 class="ua-exam-title">Prova Teórica &ndash; 2ª Etapa</h1>
+          <p class="ua-exam-subtitle">Departamento de Estratégia, Tática e Análise de Ameaças</p>
+
+          <div class="ua-panel-meta">
+            <div class="ua-chip"><strong>Turma:</strong> Curso de Heróis – Período Atual</div>
+            <div class="ua-chip"><strong>Tipo:</strong> Avaliação Individual Remota</div>
+            <div class="ua-chip"><strong>Origem:</strong> Simulação UA – Ambiente Controlado</div>
+          </div>
+        </div>
+
+        <div class="ua-panel-right">
+          <div class="ua-score-box">
+            Total de pontos
+            <span>100</span>
+          </div>
+          <div class="ua-difficulty">
+            Nível de risco simulado: <strong>Alto</strong><br />
+            Classificação: Tática, Psicológica e Operacional
+          </div>
+        </div>
+      </div>
+
+      <!-- Avisos -->
+      <div class="ua-alert ua-alert-info">
+        <div class="ua-alert-icon">🛈</div>
+        <div class="ua-alert-text">
+          <strong>Instruções Gerais</strong>
+          <p>
+            Preencha o formulário abaixo utilizando o seu identificador oficial
+            (ex.: usuário do servidor / personagem usado).
+            Leia cada situação com atenção: as perguntas avaliam sua capacidade de
+            análise, priorização de riscos e tomada de decisão sob pressão.
+	    | Bom rp guys gosto muito de vocês ass: Judiciário
+          </p>
+        </div>
+      </div>
+
+      <div class="ua-alert ua-alert-danger">
+        <div class="ua-alert-icon">⚠</div>
+        <div class="ua-alert-text">
+          <strong>Conduta</strong>
+          <p>
+            Simulações da U.A. não são meros testes escolares. Respostas incoerentes
+            com a ética heroica, o protocolo de segurança ou o bom senso operacional
+            podem resultar em <em>reavaliação de perfil</em>. Aja como se vidas reais
+            dependessem de suas decisões, porque, um dia, vão depender.
+          </p>
+        </div>
+      </div>
+
+      <!-- Formulário incorporado -->
+      <div class="ua-form-wrapper">
+        <iframe
+          class="ua-form-frame"
+          src="https://docs.google.com/forms/d/e/1FAIpQLSeD0SKVmx1lkVAV-G_YBfzMKtzXBmwVAHQ-zIW4FbG5PbxaaQ/viewform?embedded=true"
+          width="640"
+          height="5482"
+          frameborder="0"
+          marginheight="0"
+          marginwidth="0"
+        >
+          Carregando…
+        </iframe>
+      </div>
+
+      <!-- Rodapé -->
+      <div class="ua-footer">
+        <span>© ৎ💫౨﹕ 𝐌y 𝐇ero 𝐀cademia: 𝑵𝒆𝒘 𝑩𝒆𝒈𝒈𝒊𝒏𝒊𝒏𝒈𝒔 &mdash; U.A High School.</span>
+        <span><strong>Protocolo:</strong> Simulação de Prova – 2ª Etapa.</span>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
