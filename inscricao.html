@@ -5,91 +5,79 @@
   <title>U.A. High School – Inscrição para Exame</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Fontes -->
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
-  <link rel="icon" type="image/png" href="ua-logo.png" />
+
+  <!-- Ícone oficial -->
+  <link rel="icon" type="image/png" href="https://i.pinimg.com/736x/e8/57/3f/e8573fed4bd848b566383b0f0aa3b6fe.jpg" />
 
   <style>
     :root {
-      --ua-green: #1a1a1a;          /* substituiu verde */
-      --ua-green-dark: #141414;     /* substituiu verde escuro */
-      --ua-gold: #00ff9d;           /* substituiu amarelo */
-      --ua-bg: #050c14;
-      --ua-panel: #0b1724;
-      --ua-accent: #1f3f63;
-      --ua-text: #e7ecf5;
-      --ua-muted: #9ca8c0;
+      --ua-green: #101010;
+      --ua-green-dark: #0b0b0b;
+      --ua-gold: #ffffff;
+      --ua-bg: #0a0a0a;
+      --ua-panel: #141414;
+      --ua-accent: #2a2a2a;
+      --ua-text: #f0f0f0;
+      --ua-muted: #a0a0a0;
       --ua-danger: #ff4a4a;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html, body {
-      height: 100%;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: "Roboto", sans-serif;
       background:
-        radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 55%),
-        radial-gradient(circle at bottom, rgba(0, 123, 255, 0.12), transparent 55%),
+        radial-gradient(circle at top, rgba(255,255,255,0.07), transparent 55%),
+        radial-gradient(circle at bottom, rgba(255,255,255,0.04), transparent 55%),
         var(--ua-bg);
       color: var(--ua-text);
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
     }
 
+    /* NAVBAR */
     .ua-navbar {
       background: linear-gradient(90deg, var(--ua-green-dark), var(--ua-green));
       border-bottom: 2px solid var(--ua-gold);
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
       padding: 0.6rem 1.5rem;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       position: sticky;
       top: 0;
-      z-index: 50;
+      z-index: 100;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55);
     }
 
     .ua-brand {
       display: flex;
-      align-items: center;
       gap: 0.6rem;
+      align-items: center;
     }
+
+    /* LOGO */
     .ua-logo {
       width: 40px;
       height: 40px;
       border-radius: 9px;
-      border: 2px solid #00ff9d;
+      border: 2px solid #ffffff;
+      box-shadow: 0 0 12px rgba(255,255,255,0.7);
+      overflow: hidden;
+      background: #000;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: "Oswald", sans-serif;
-      font-weight: 700;
-      font-size: 1.4rem;
-      background: radial-gradient(circle at 30% 20%, #ffffff, #0b1920);
-      color: #00ff9d;
-      box-shadow: 0 0 12px rgba(0, 255, 157, 0.7);
-      text-decoration: none;
     }
-    .ua-title {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
+    .ua-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .ua-title-main {
-      font-family: "Oswald", sans-serif;
-      letter-spacing: 0.12em;
-      font-size: 0.92rem;
+      font-family: "Oswald";
       text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
     }
-
     .ua-title-sub {
       font-size: 0.75rem;
       color: var(--ua-muted);
@@ -100,15 +88,15 @@
     .ua-badge {
       padding: 0.25rem 0.7rem;
       border-radius: 999px;
-      border: 1px solid rgba(0, 255, 157, 0.7);
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
       color: var(--ua-gold);
-      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255,255,255,0.7);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
       backdrop-filter: blur(4px);
+      text-transform: uppercase;
     }
 
+    /* CONTAINER */
     .container {
       max-width: 900px;
       margin: 2rem auto;
@@ -116,9 +104,9 @@
     }
 
     h1 {
-      font-family: "Oswald", sans-serif;
-      color: #00ff9d;
-      letter-spacing: 0.18em;
+      font-family: "Oswald";
+      color: var(--ua-gold);
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       margin-bottom: 1.5rem;
       font-size: 2rem;
@@ -126,165 +114,152 @@
 
     .ua-desc {
       background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(0,255,157,0.45);
-      padding: 1.3rem;
+      border: 1px solid rgba(255,255,255,0.45);
       border-radius: 14px;
-      line-height: 1.55;
+      padding: 1.3rem;
       margin-bottom: 2rem;
-      font-size: 1rem;
+      line-height: 1.55;
     }
 
     .ua-section-title {
       margin-top: 2rem;
-      margin-bottom: 0.8rem;
       font-size: 1.3rem;
-      font-family: "Oswald", sans-serif;
+      font-family: "Oswald";
       text-transform: uppercase;
-      color: #00ff9d;
+      color: var(--ua-gold);
       letter-spacing: 0.12em;
+      margin-bottom: 0.8rem;
     }
 
     .ua-box {
-      background: rgba(11, 23, 36, 0.92);
-      border: 1px solid rgba(140,164,204,0.35);
+      background: rgba(20,20,20,0.95);
       border-radius: 14px;
-      padding: 1.2rem;
+      padding: 1.3rem;
+      border: 1px solid rgba(255,255,255,0.3);
       margin-bottom: 1.6rem;
       box-shadow: 0 0 12px rgba(0,0,0,0.5);
     }
 
-    .req-list li {
-      margin: 0.5rem 0;
-    }
-
-    label {
-      font-size: 0.9rem;
-      opacity: 0.9;
-    }
+    .req-list li { margin: 0.5rem 0; }
 
     input, textarea {
       width: 100%;
-      margin-top: 0.3rem;
-      margin-bottom: 1rem;
+      margin: 0.4rem 0 1rem;
       padding: 0.6rem;
       border-radius: 8px;
-      border: 1px solid rgba(0,255,157,0.3);
       background: rgba(255,255,255,0.05);
-      color: #e7ecf5;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: var(--ua-text);
       font-size: 0.9rem;
-      outline: none;
     }
 
     input:focus, textarea:focus {
-      border-color: #00ff9d;
-      box-shadow: 0 0 8px rgba(0,255,157,0.5);
+      border-color: var(--ua-gold);
+      box-shadow: 0 0 8px rgba(255,255,255,0.4);
+      outline: none;
     }
 
     .submit-btn {
       display: inline-block;
       padding: 0.9rem 1.4rem;
-      background: #00ff9d;
+      background: var(--ua-gold);
       color: #000;
       border-radius: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
+      font-weight: bold;
       letter-spacing: 0.1em;
-      cursor: pointer;
-      border: none;
+      text-transform: uppercase;
       margin-top: 1rem;
-      font-size: 0.9rem;
       text-decoration: none;
     }
 
     .submit-btn:hover {
       opacity: 0.85;
       transform: translateY(-2px);
-      transition: 0.15s;
     }
 
     .back-link {
       display: inline-block;
       margin-top: 2rem;
-      font-size: 0.9rem;
+      color: var(--ua-muted);
       text-decoration: none;
-      color: #9ca8c0;
     }
+    .back-link:hover { color: var(--ua-gold); }
 
-    .back-link:hover {
-      color: #00ff9d;
-    }
   </style>
 </head>
 
 <body>
 
-  <!-- Barra UA -->
+  <!-- NAVBAR -->
   <header class="ua-navbar">
     <div class="ua-brand">
-      <a href="home.html" class="ua-logo">U.A</a>
-      <div class="ua-title">
-        <span class="ua-title-main">U.A. HIGH SCHOOL</span>
-        <span class="ua-title-sub">CURSO DE FORMAÇÃO DE HERÓIS</span>
+      <a href="home.html" class="ua-logo">
+        <img src="https://i.pinimg.com/736x/e8/57/3f/e8573fed4bd848b566383b0f0aa3b6fe.jpg">
+      </a>
+      <div>
+        <div class="ua-title-main">U.A. HIGH SCHOOL</div>
+        <div class="ua-title-sub">CURSO DE FORMAÇÃO DE HERÓIS</div>
       </div>
     </div>
+
     <div class="ua-badge">
-      incrição oficial &bull; Setor de avaliação
+      Inscrição Oficial &bull; Setor de Avaliação
     </div>
   </header>
 
-<div class="container">
+  <div class="container">
 
-  <h1>Inscrição para Exame de Admissão</h1>
+    <h1>Inscrição para Exame de Admissão</h1>
 
-  <div class="ua-desc">
-    A U.A. High School realiza, anualmente, o Exame de Admissão para selecionar os candidatos mais
-    preparados para se tornarem futuros heróis.  
-    <br><br>
-    Preencha os dados abaixo com atenção. Informações falsas ou incompletas podem resultar em
-    desclassificação imediata.
+    <div class="ua-desc">
+      A U.A. High School realiza, anualmente, o Exame de Admissão para selecionar
+      os candidatos mais preparados para se tornarem futuros heróis.  
+      <br><br>
+      Preencha os dados abaixo com atenção. Informações incompletas ou falsas
+      podem resultar em desclassificação imediata.
+    </div>
+
+    <!-- Requisitos -->
+    <h2 class="ua-section-title">Requisitos Básicos</h2>
+    <div class="ua-box">
+      <ul class="req-list">
+        <li>✔ Ter 15 anos ou mais;</li>
+        <li>✔ Possuir identificação válida (usuário Discord ou Registro UA);</li>
+        <li>✔ Controle mínimo da própria individualidade;</li>
+        <li>✔ Concordância com o Código de Conduta Heroica.</li>
+      </ul>
+    </div>
+
+    <!-- Formulário -->
+    <h2 class="ua-section-title">Formulário Inicial</h2>
+    <p style="color: var(--ua-danger); font-size: 0.9rem; margin-bottom: 1rem;">
+      [MERAMENTE ILUSTRATIVO — NÃO É NECESSÁRIO PREENCHER PARA PARTICIPAR DO EXAME.]
+    </p>
+
+    <div class="ua-box">
+      <label>Nome completo:</label>
+      <input type="text" placeholder="Digite seu nome">
+
+      <label>Usuário do Discord:</label>
+      <input type="text" placeholder="ex: pedrinho123">
+
+      <label>Idade:</label>
+      <input type="text" placeholder="15">
+
+      <label>Quirk / Individualidade:</label>
+      <textarea rows="8" placeholder="Ex: Hardening, Shadow Step, Teleforce..."></textarea>
+
+      <label>Explique sua motivação:</label>
+      <textarea rows="4" placeholder="Por que deseja entrar na U.A.?"></textarea>
+
+      <a class="submit-btn" href="https://www.youtube.com/watch?v=xvFZjo5PgG0" target="_blank">
+        Enviar Inscrição Oficial
+      </a>
+    </div>
+
+    <a href="home.html" class="back-link">← Voltar para a página inicial</a>
+
   </div>
-
-  <!-- Requisitos -->
-  <h2 class="ua-section-title">Requisitos Básicos</h2>
-  <div class="ua-box">
-    <ul class="req-list">
-      <li>✔ Ter 15 anos ou mais.</li>
-      <li>✔ Possuir identificação válida (usuário do Discord ou Registro UA).</li>
-      <li>✔ Apresentar controle mínimo da própria individualidade.</li>
-      <li>✔ Concordar com o código de conduta heroica.</li>
-    </ul>
-  </div>
-
-  <!-- Dados do candidato -->
-  <h2 class="ua-section-title">Formulário Inicial</h2>
-<p style="color: var(--ua-danger); font-size: 0.9rem; margin-bottom: 1rem;">
-  [MERAMENTE ILUSTRATIVO, NÃO É NECESSÁRIO PREENCHER NADA PARA PARTICIPAR DO EXAME, ACOMPANHE A ATIVIDADE DA STAFF DENTRO DO SERVIDOR.]
-</p>
-  <div class="ua-box">
-    <label>Nome completo:</label>
-    <input type="text" placeholder="Digite seu nome">
-
-    <label>[META] Usuário do Discord (ou apelido do servidor):</label>
-    <input type="text" placeholder="ex: pedrinho123">
-
-    <label>Idade:</label>
-    <input type="text" placeholder="15">
-
-    <label>Quirk / Individualidade:</label>
-    <textarea rows="8" placeholder="Ex: Hardening, Shadow Step, Teleforce..."></textarea>
-
-    <label>Descreva brevemente sua motivação para entrar na U.A.:</label>
-    <textarea rows="4" placeholder="Explique seu objetivo como herói..."></textarea>
-
-    <!-- Botão para Google Forms (substitua pelo seu link oficial) -->
-    <a class="submit-btn" href="https://www.youtube.com/watch?v=xvFZjo5PgG0" target="_blank">
-      Enviar Inscrição Oficial
-    </a>
-  </div>
-
-  <a href="home.html" class="back-link">← Voltar para a página inicial</a>
-
-</div>
 
 </body>
 </html>
