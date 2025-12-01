@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>U.A. High School – Resultados do Exame</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="ua-logo.png" />
+
+  <style>
+    :root {
+      --ua-green: #1a1a1a;          /* substituiu verde */
+      --ua-green-dark: #141414;     /* substituiu verde escuro */
+      --ua-gold: #00ff9d;           /* substituiu amarelo */
+      --ua-bg: #050c14;
+      --ua-panel: #0b1724;
+      --ua-accent: #1f3f63;
+      --ua-text: #e7ecf5;
+      --ua-muted: #9ca8c0;
+      --ua-danger: #ff4a4a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 55%),
+        radial-gradient(circle at bottom, rgba(0, 123, 255, 0.12), transparent 55%),
+        var(--ua-bg);
+      color: var(--ua-text);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .ua-navbar {
+      background: linear-gradient(90deg, var(--ua-green-dark), var(--ua-green));
+      border-bottom: 2px solid var(--ua-gold);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+      padding: 0.6rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .ua-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .ua-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 9px;
+      border: 2px solid #00ff9d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      background: radial-gradient(circle at 30% 20%, #ffffff, #0b1920);
+      color: #00ff9d;
+      box-shadow: 0 0 12px rgba(0, 255, 157, 0.7);
+      text-decoration: none;
+    }
+    .ua-title {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .ua-title-main {
+      font-family: "Oswald", sans-serif;
+      letter-spacing: 0.12em;
+      font-size: 0.92rem;
+      text-transform: uppercase;
+    }
+
+    .ua-title-sub {
+      font-size: 0.75rem;
+      color: var(--ua-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .ua-badge {
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 255, 157, 0.7);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ua-gold);
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(4px);
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    h1 {
+      font-family: "Oswald", sans-serif;
+      color: #00ff9d;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    .ua-alert {
+      background: rgba(84,19,26,0.35);
+      border: 1px solid rgba(255,102,102,0.55);
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      margin-bottom: 1.8rem;
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .search-box {
+      margin-bottom: 1.6rem;
+      text-align: center;
+    }
+
+    .search-box input {
+      width: 80%;
+      max-width: 450px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(0,255,157,0.45);
+      padding: 0.8rem 1rem;
+      border-radius: 10px;
+      color: #e7ecf5;
+      font-size: 0.95rem;
+    }
+
+    .search-box input:focus {
+      border-color: #00ff9d;
+      box-shadow: 0 0 8px rgba(0,255,157,0.4);
+      outline: none;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.3rem;
+    }
+
+    .result-card {
+      background: rgba(11, 23, 36, 0.92);
+      border-radius: 16px;
+      border: 1px solid rgba(140,164,204,0.35);
+      padding: 1.4rem;
+      box-shadow: 0 0 12px rgba(0,0,0,0.5);
+      transition: 0.15s;
+    }
+
+    .result-card:hover {
+      transform: translateY(-4px);
+      border-color: #00ff9d;
+      box-shadow: 0 0 14px rgba(0,255,157,0.5);
+    }
+
+    .result-name {
+      font-size: 1.25rem;
+      font-family: "Oswald", sans-serif;
+      margin-bottom: 0.3rem;
+      color: #00ff9d;
+      letter-spacing: 0.05em;
+    }
+
+    .result-user {
+      font-size: 0.85rem;
+      color: #9ca8c0;
+      margin-bottom: 0.8rem;
+    }
+
+    .result-score {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #00ff9d;
+      margin-bottom: 0.4rem;
+    }
+
+    .result-status {
+      font-size: 0.85rem;
+      color: #e7ecf5;
+      opacity: 0.85;
+    }
+
+    .back-link {
+      display: block;
+      margin: 2rem auto;
+      text-align: center;
+      color: #9ca8c0;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .back-link:hover {
+      color: #00ff9d;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Barra UA -->
+  <header class="ua-navbar">
+    <div class="ua-brand">
+      <a href="home.html" class="ua-logo">U.A</a>
+      <div class="ua-title">
+        <span class="ua-title-main">U.A. HIGH SCHOOL</span>
+        <span class="ua-title-sub">CURSO DE FORMAÇÃO DE HERÓIS</span>
+      </div>
+    </div>
+    <div class="ua-badge">
+      Resultados Oficiais &bull; Setor de Avaliação
+    </div>
+  </header>
+
+<div class="container">
+
+  <h1>Resultados Oficiais – Exame da U.A.</h1>
+
+  <div class="ua-alert">
+    ⚠ Os resultados abaixo são oficiais e refletem o desempenho individual na Prova Teórica – 2ª Etapa.
+    Candidatos que desejarem revisão devem contatar o Setor de Avaliação.
+  </div>
+
+  <!-- Caixa de busca -->
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Pesquisar candidato pelo nome ou usuário...">
+  </div>
+
+  <!-- Lista de resultados -->
+  <div class="results-grid" id="resultsList">
+
+    <!-- Exemplo de card -->
+    <div class="result-card">
+      <div class="result-name">Edogawa Ranpo</div>
+      <div class="result-user">@nuirdaj</div>
+      <div class="result-score">92 / 100</div>
+      <div class="result-status">Aprovado – Excelente desempenho</div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-name">Yuigui</div>
+      <div class="result-user">@yuigui</div>
+      <div class="result-score">84 / 100</div>
+      <div class="result-status">Aprovado – Muito bom</div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-name">Akai</div>
+      <div class="result-user">@akai</div>
+      <div class="result-score">76 / 100</div>
+      <div class="result-status">Aprovado – Desempenho sólido</div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-name">Kairo</div>
+      <div class="result-user">@kairo</div>
+      <div class="result-score">61 / 100</div>
+      <div class="result-status">Aprovado – Margem mínima</div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-name">Sayuri</div>
+      <div class="result-user">@sayuri</div>
+      <div class="result-score">48 / 100</div>
+      <div class="result-status">Reprovado – Solicitar acompanhamento</div>
+    </div>
+
+  </div>
+
+  <a href="index.html" class="back-link">← Voltar para a página inicial</a>
+
+</div>
+
+<script>
+  // Sistema simples de busca (funciona no GitHub Pages)
+  const searchInput = document.getElementById("searchInput");
+  const resultsList = document.getElementById("resultsList");
+  const cards = resultsList.getElementsByClassName("result-card");
+
+  searchInput.addEventListener("input", function () {
+    const filter = this.value.toLowerCase();
+
+    for (let card of cards) {
+      const name = card.querySelector(".result-name").textContent.toLowerCase();
+      const user = card.querySelector(".result-user").textContent.toLowerCase();
+
+      if (name.includes(filter) || user.includes(filter)) {
+        card.style.display = "";
+      } else {
+        card.style.display = "none";
+      }
+    }
+  });
+</script>
+
+</body>
+</html>

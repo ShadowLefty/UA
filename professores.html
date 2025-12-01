@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>U.A. High School – Equipe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="ua-logo.png" />
+
+  <style>
+    :root {
+      --ua-green: #1a1a1a;          /* substituiu verde */
+      --ua-green-dark: #141414;     /* substituiu verde escuro */
+      --ua-gold: #00ff9d;           /* substituiu amarelo */
+      --ua-bg: #050c14;
+      --ua-panel: #0b1724;
+      --ua-accent: #1f3f63;
+      --ua-text: #e7ecf5;
+      --ua-muted: #9ca8c0;
+      --ua-danger: #ff4a4a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 55%),
+        radial-gradient(circle at bottom, rgba(0, 123, 255, 0.12), transparent 55%),
+        var(--ua-bg);
+      color: var(--ua-text);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .ua-navbar {
+      background: linear-gradient(90deg, var(--ua-green-dark), var(--ua-green));
+      border-bottom: 2px solid var(--ua-gold);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+      padding: 0.6rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .ua-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .ua-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 9px;
+      border: 2px solid #00ff9d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      background: radial-gradient(circle at 30% 20%, #ffffff, #0b1920);
+      color: #00ff9d;
+      box-shadow: 0 0 12px rgba(0, 255, 157, 0.7);
+      text-decoration: none;
+    }
+    .ua-title {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .ua-title-main {
+      font-family: "Oswald", sans-serif;
+      letter-spacing: 0.12em;
+      font-size: 0.92rem;
+      text-transform: uppercase;
+    }
+
+    .ua-title-sub {
+      font-size: 0.75rem;
+      color: var(--ua-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .ua-badge {
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 255, 157, 0.7);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ua-gold);
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(4px);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    h1 {
+      font-family: "Oswald", sans-serif;
+      color: #00ff9d;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    .ua-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.4rem;
+    }
+
+    .prof-card {
+      background: rgba(11, 23, 36, 0.92);
+      border-radius: 16px;
+      border: 1px solid rgba(140,164,204,0.35);
+      padding: 1.4rem;
+      text-align: center;
+      box-shadow: 0 0 12px rgba(0,0,0,0.5);
+      transition: 0.15s;
+    }
+
+    .prof-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 14px rgba(0,255,157,0.5);
+      border-color: #00ff9d;
+    }
+
+    .prof-img {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 0.8rem;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,255,157,0.4), transparent 70%);
+      border: 2px solid #00ff9d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Oswald", sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #00ff9d;
+      overflow: hidden;
+    }
+.prof-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      /* recorta para caber dentro do círculo */
+  object-position: center;
+  display: block;
+}
+
+    .prof-name {
+      font-size: 1.3rem;
+      font-family: "Oswald", sans-serif;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+      color: #00ff9d;
+    }
+
+    .prof-role {
+      font-size: 0.85rem;
+      color: #9ca8c0;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .prof-desc {
+      font-size: 0.92rem;
+      line-height: 1.5;
+      opacity: 0.95;
+    }
+
+    .back-link {
+      display: block;
+      margin: 2rem auto;
+      text-align: center;
+      color: #9ca8c0;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .back-link:hover {
+      color: #00ff9d;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Barra UA -->
+  <header class="ua-navbar">
+    <div class="ua-brand">
+      <a href="home.html" class="ua-logo">U.A</a>
+      <div class="ua-title">
+        <span class="ua-title-main">U.A. HIGH SCHOOL</span>
+        <span class="ua-title-sub">CURSO DE FORMAÇÃO DE HERÓIS</span>
+      </div>
+    </div>
+    <div class="ua-badge">
+      CORPO DOCENTE &bull; Setor Principal
+    </div>
+  </header>
+
+<div class="container">
+
+  <h1>Corpo Docente – U.A. High School</h1>
+
+  <div class="ua-grid">
+
+    <!-- Professor 1 -->
+    <div class="prof-card">
+<div class="prof-img">
+  <img src="chad.png" alt="Supervisor Chad">
+</div>
+      <div class="prof-name">Chad</div>
+      <div class="prof-role">Supervisor</div>
+      <div class="prof-desc">
+        1° Supervisor chefe e líder da Illusion. Zela a ordem, segurança e cuida do porte físico dos alunos. <br>
+        — “Fica firme. Quando o mundo tenta te quebrar, é aí que você aprende do que realmente é feito.”
+      </div>
+    </div>
+
+    <!-- Professor 2 -->
+    <div class="prof-card">
+<div class="prof-img">
+  <img src="arc.png" alt="Supervisor Arcane">
+</div>
+      <div class="prof-name">Arcane</div>
+      <div class="prof-role">Supervisor</div>
+      <div class="prof-desc">
+        2° Supervisor chefe e líder da Eternal. Zela a ordem, segurança e cuida dos equipamentos. <br>
+        — "Quer respeito? Seja digno dele! Um líder inspira pela integridade, não pela força."
+      </div>
+    </div>
+
+    <!-- Professor 3 -->
+    <div class="prof-card">
+<div class="prof-img">
+  <img src="felarion.png" alt="Felarion">
+</div>
+      <div class="prof-name">Felarion</div>
+      <div class="prof-role">Supervisor Geral & Professor</div>
+      <div class="prof-desc">
+        Cuida da ordem segurança no geral, treina precisão de comandos, comunicação, estratégia, suporte tático em equipes e raciocínio rápido para situações de crise. <br>
+        — "Saia da zona de conforto! Se algo te desafia é porque tem verdadeiro poder de te transformar."
+      </div>
+    </div>
+
+    <!-- Professor 4 -->
+    <div class="prof-card">
+<div class="prof-img">
+  <img src="mic.png" alt="President Mic">
+</div>
+      <div class="prof-name">President Mic</div>
+      <div class="prof-role">COMUNICAÇÃO & SUPORTE TÁTICO</div>
+      <div class="prof-desc">
+        Instrutor especializado em coordenação à distância, controle de multidões e suporte estratégico através de estímulos sonoros de alta precisão. <br>
+        — “Quando sua voz vacilar, grite mais alto que o medo. Coragem também faz barulho.”
+      </div>
+    </div>
+
+    <!-- Professor 5 -->
+    <div class="prof-card">
+<div class="prof-img">
+  <img src="kakashi.png" alt="Kakashi">
+</div>
+      <div class="prof-name">Kakashi Hatake</div>
+      <div class="prof-role">Combate Adaptativo & Equipe</div>
+      <div class="prof-desc">
+        Instrutor especializado em coordenação de equipes, combate adaptativo e leitura avançada de adversários. <br>
+        — "Eu observo tudo. Até o que vocês tentam esconder, usem isso a seu favor, ou eu uso contra vocês."
+      </div>
+    </div>
+
+    <!-- Professor 6 -->
+    <div class="prof-card">
+<div class="prof-img">
+  <img src="kojiro.png" alt="Kojiro Sasaki">
+</div>
+      <div class="prof-name">Kojiro Sasaki</div>
+      <div class="prof-role">TÉCNICA, MOTIVAÇÃO & PRECISÃO</div>
+      <div class="prof-desc">
+        Instrutor especializado em motivações, precisão absoluta e combate baseado em mínima energia e máxima eficiência. <br>
+        — “A lâmina mais rápida não é a que corre. É a que espera… e acerta quando tudo já estava decidido.”
+      </div>
+    </div>
+
+    <!-- Creditos -->
+    <div class="prof-card">
+      <div class="prof-img">J</div>
+      <div class="prof-name">Judiciário</div>
+      <div class="prof-role">Administrador</div>
+      <div class="prof-desc">
+        Criador/Designer/Programador do site, coloquei isso aqui só para os créditos XD. <br>
+        — “Dei um tapa na terra e ela gira até hoje.”
+      </div>
+    </div>
+
+  </div>
+
+  <a href="home.html" class="back-link">← Voltar para a página inicial</a>
+
+</div>
+
+</body>
+</html>
