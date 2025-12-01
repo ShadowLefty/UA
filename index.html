@@ -8,7 +8,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://shadowlefty.github.io/UA/index.html" />
   <meta property="og:image" content="https://i.pinimg.com/736x/e8/57/3f/e8573fed4bd848b566383b0f0aa3b6fe.jpg" />
-  <meta name="theme-color" content="#00ff9d" />
+  <meta name="theme-color" content="#111111" />
 
   <!-- Favicon da aba -->
   <link rel="icon" type="image/png" href="https://i.pinimg.com/736x/e8/57/3f/e8573fed4bd848b566383b0f0aa3b6fe.jpg" />
@@ -19,14 +19,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --ua-green: #1a1a1a;          /* substituiu verde */
-      --ua-green-dark: #141414;     /* substituiu verde escuro */
-      --ua-gold: #00ff9d;           /* substituiu amarelo */
-      --ua-bg: #050c14;
-      --ua-panel: #0b1724;
-      --ua-accent: #1f3f63;
-      --ua-text: #e7ecf5;
-      --ua-muted: #9ca8c0;
+      --ua-green: #101010;        /* antes era #1a1a1a — ficou mais escuro */
+      --ua-green-dark: #0b0b0b;   /* antes era #141414 — ficou mais escuro */
+      --ua-gold: #ffffff;         /* antes era verde neon — agora branco */
+      --ua-bg: #0a0a0a;             /* fundo geral mais neutro */
+      --ua-panel: #141414;          /* painel mais definido que o fundo */
+      --ua-accent: #2a2a2a;         /* substitui azuis pelos cinzas */
+      --ua-text: #f0f0f0;
+      --ua-muted: #a0a0a0;
       --ua-danger: #ff4a4a;
     }
 
@@ -43,9 +43,9 @@
     body {
       font-family: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
-        radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 55%),
-        radial-gradient(circle at bottom, rgba(0, 123, 255, 0.12), transparent 55%),
-        var(--ua-bg);
+      radial-gradient(circle at top, rgba(255, 255, 255, 0.07), transparent 55%),
+      radial-gradient(circle at bottom, rgba(255, 255, 255, 0.04), transparent 55%),
+      var(--ua-bg);
       color: var(--ua-text);
       display: flex;
       flex-direction: column;
@@ -72,22 +72,24 @@
       gap: 0.6rem;
     }
 
-    .ua-logo {
-      width: 40px;
-      height: 40px;
-      border-radius: 9px;
-      border: 2px solid #00ff9d;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: "Oswald", sans-serif;
-      font-weight: 700;
-      font-size: 1.4rem;
-      background: radial-gradient(circle at 30% 20%, #ffffff, #0b1920);
-      color: #00ff9d;
-      box-shadow: 0 0 12px rgba(0, 255, 157, 0.7);
-      text-decoration: none;
-    }
+.ua-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 9px;
+  border: 2px solid #ffffff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
+  background: #000; /* fundo neutro igual ao antigo */
+}
+.ua-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* garante que a imagem ENCHA sem distorcer */
+  object-position: center; /* centraliza */
+}
 
     .ua-title {
       display: flex;
@@ -112,7 +114,7 @@
     .ua-badge {
       padding: 0.25rem 0.7rem;
       border-radius: 999px;
-      border: 1px solid rgba(0, 255, 157, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.7);
       font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.12em;
@@ -130,7 +132,7 @@
     }
 
     .ua-panel {
-      background: linear-gradient(145deg, rgba(11, 23, 36, 0.98), rgba(6, 12, 20, 0.98));
+      background: linear-gradient(145deg, rgba(20, 20, 20, 0.98), rgba(10, 10, 10, 0.98));
       border-radius: 18px;
       border: 1px solid rgba(140, 164, 204, 0.4);
       box-shadow:
@@ -146,8 +148,8 @@
       position: absolute;
       inset: -20%;
       background:
-        radial-gradient(circle at 10% 0%, rgba(0, 255, 157, 0.16), transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(0, 255, 163, 0.08), transparent 50%);
+        radial-gradient(circle at 10% 0%, rgba(255, 255, 255, 0.08), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(255, 255, 255, 0.04), transparent 50%);
       opacity: 0.9;
       pointer-events: none;
       z-index: -1;
@@ -192,12 +194,12 @@
       color: var(--ua-muted);
     }
 
-    .ua-chip {
-      padding: 0.18rem 0.7rem;
-      border-radius: 999px;
-      border: 1px solid rgba(156, 168, 192, 0.6);
-      background: rgba(8, 21, 35, 0.85);
-    }
+.ua-chip {
+  padding: 0.18rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(180, 180, 180, 0.6);
+  background: rgba(30, 30, 30, 0.9);
+}
 
     .ua-chip strong {
       color: var(--ua-gold);
@@ -212,8 +214,8 @@
     .ua-score-box {
       border-radius: 12px;
       padding: 0.7rem 0.9rem;
-      background: radial-gradient(circle at 10% 0%, rgba(0, 255, 157, 0.3), rgba(9, 20, 33, 0.98));
-      border: 1px solid rgba(0, 255, 157, 0.6);
+      background: radial-gradient(circle at 10% 0%, rgba(255,255,255,0.15), rgba(20, 20, 20, 1));
+      border: 1px solid rgba(255, 255, 255, 0.6);
       font-size: 0.78rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
@@ -346,7 +348,9 @@
   <!-- Barra UA -->
   <header class="ua-navbar">
     <div class="ua-brand">
-      <a href="home.html" class="ua-logo">U.A</a>
+<a href="home.html" class="ua-logo">
+  <img src="https://i.pinimg.com/736x/e8/57/3f/e8573fed4bd848b566383b0f0aa3b6fe.jpg" alt="UA Logo">
+</a>
       <div class="ua-title">
         <span class="ua-title-main">U.A. HIGH SCHOOL</span>
         <span class="ua-title-sub">CURSO DE FORMAÇÃO DE HERÓIS</span>
@@ -436,6 +440,5 @@
   </main>
 </body>
 </html>
-
 
 
