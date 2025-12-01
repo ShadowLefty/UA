@@ -2,32 +2,33 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-<!-- OG: Preview no Discord -->
-<meta property="og:title" content="U.A. High School – Prova Teórica" />
-<meta property="og:description" content="Prova oficial da U.A. High School — Setor de Avaliação da 2ª Etapa." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://shadowlefty.github.io/UA/index.html" />
-<meta property="og:image" content="https://i.pinimg.com/736x/97/35/e4/9735e462e50adecd6ad4b831008b34a8.jpg" />
-<meta name="theme-color" content="#00ff9d" />
-<link rel="icon" type="image/png" href="https://i.pinimg.com/736x/e8/57/3f/e8573fed4bd848b566383b0f0aa3b6fe.jpg" />
+  <!-- Open Graph / Discord Preview -->
+  <meta property="og:title" content="U.A. High School – Painel Inicial" />
+  <meta property="og:description" content="Bem-vindo à U.A. High School — acesse inscrições, provas, resultados e corpo docente." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://shadowlefty.github.io/UA/home.html" />
+  <meta property="og:image" content="https://i.pinimg.com/736x/e8/57/3f/e8573fed4bd848b566383b0f0aa3b6fe.jpg" />
+  <meta name="theme-color" content="#111111" />
 
   <title>U.A. High School – Página Inicial</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Fontes -->
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
-  
-  <link rel="icon" type="image/png" href="ua-logo.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://i.pinimg.com/736x/e8/57/3f/e8573fed4bd848b566383b0f0aa3b6fe.jpg" />
 
   <style>
     :root {
-      --ua-green: #1a1a1a;          /* substituiu verde */
-      --ua-green-dark: #141414;     /* substituiu verde escuro */
-      --ua-gold: #00ff9d;           /* substituiu amarelo */
-      --ua-bg: #050c14;
-      --ua-panel: #0b1724;
-      --ua-accent: #1f3f63;
-      --ua-text: #e7ecf5;
-      --ua-muted: #9ca8c0;
+      --ua-green: #101010;
+      --ua-green-dark: #0b0b0b;
+      --ua-gold: #ffffff;
+      --ua-bg: #0a0a0a;
+      --ua-panel: #141414;
+      --ua-accent: #2a2a2a;
+      --ua-text: #f0f0f0;
+      --ua-muted: #a0a0a0;
       --ua-danger: #ff4a4a;
     }
 
@@ -44,8 +45,8 @@
     body {
       font-family: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
-        radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 55%),
-        radial-gradient(circle at bottom, rgba(0, 123, 255, 0.12), transparent 55%),
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.07), transparent 55%),
+        radial-gradient(circle at bottom, rgba(255, 255, 255, 0.04), transparent 55%),
         var(--ua-bg);
       color: var(--ua-text);
       display: flex;
@@ -53,6 +54,7 @@
       align-items: stretch;
     }
 
+    /* Barra UA (igual à da prova) */
     .ua-navbar {
       background: linear-gradient(90deg, var(--ua-green-dark), var(--ua-green));
       border-bottom: 2px solid var(--ua-gold);
@@ -71,22 +73,27 @@
       align-items: center;
       gap: 0.6rem;
     }
+
     .ua-logo {
       width: 40px;
       height: 40px;
       border-radius: 9px;
-      border: 2px solid #00ff9d;
+      border: 2px solid #ffffff;
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: "Oswald", sans-serif;
-      font-weight: 700;
-      font-size: 1.4rem;
-      background: radial-gradient(circle at 30% 20%, #ffffff, #0b1920);
-      color: #00ff9d;
-      box-shadow: 0 0 12px rgba(0, 255, 157, 0.7);
-      text-decoration: none;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
+      background: #000;
     }
+
+    .ua-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
     .ua-title {
       display: flex;
       flex-direction: column;
@@ -110,7 +117,7 @@
     .ua-badge {
       padding: 0.25rem 0.7rem;
       border-radius: 999px;
-      border: 1px solid rgba(0, 255, 157, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.7);
       font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.12em;
@@ -119,27 +126,24 @@
       backdrop-filter: blur(4px);
     }
 
+    /* Conteúdo Home */
     .home-container {
       max-width: 900px;
       margin: 2rem auto;
       padding: 0 1rem;
     }
-    .ua-emoji {
-      color: var(--ua-gold); /* fica verde neon igual ao resto */
-      font-size: 1.1em;
-    }
 
     h1 {
       font-family: "Oswald", sans-serif;
-      color: #00ff9d;
+      color: var(--ua-gold);
       letter-spacing: 0.15em;
       margin-bottom: 0.6rem;
       text-transform: uppercase;
     }
 
     .ua-desc {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(0,255,157,0.5);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.5);
       padding: 1.5rem;
       border-radius: 14px;
       line-height: 1.55;
@@ -154,22 +158,34 @@
     }
 
     .menu-item {
-      background: linear-gradient(145deg, rgba(11, 23, 36, 0.98), rgba(6, 12, 20, 0.98));
+      background: linear-gradient(145deg, rgba(20, 20, 20, 0.98), rgba(10, 10, 10, 0.98));
       border-radius: 14px;
       padding: 1rem 1.2rem;
-      border: 1px solid rgba(140,164,204,0.35);
-      box-shadow: 0 0 12px rgba(0,0,0,0.5);
+      border: 1px solid rgba(180, 180, 180, 0.4);
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.7);
       transition: 0.15s;
       cursor: pointer;
       font-weight: 500;
       text-decoration: none;
-      color: #e7ecf5;
+      color: var(--ua-text);
     }
 
     .menu-item:hover {
       transform: translateY(-4px);
-      border-color: #00ff9d;
-      box-shadow: 0 0 12px rgba(0,255,157,0.5);
+      border-color: #ffffff;
+      box-shadow: 0 0 14px rgba(255, 255, 255, 0.4);
+    }
+
+    .ua-emoji {
+      color: var(--ua-gold);
+      font-size: 1.1em;
+      margin-right: 0.25rem;
+    }
+
+    @media (max-width: 768px) {
+      .ua-navbar {
+        padding: 0.6rem 1rem;
+      }
     }
   </style>
 </head>
@@ -179,7 +195,9 @@
   <!-- Barra UA -->
   <header class="ua-navbar">
     <div class="ua-brand">
-      <a href="home.html" class="ua-logo">U.A</a>
+      <a href="home.html" class="ua-logo">
+        <img src="https://i.pinimg.com/736x/e8/57/3f/e8573fed4bd848b566383b0f0aa3b6fe.jpg" alt="UA Logo">
+      </a>
       <div class="ua-title">
         <span class="ua-title-main">U.A. HIGH SCHOOL</span>
         <span class="ua-title-sub">CURSO DE FORMAÇÃO DE HERÓIS</span>
@@ -190,39 +208,33 @@
     </div>
   </header>
 
-<div class="home-container">
-  
-  <h1>Bem-vindo à U.A. High School</h1>
+  <div class="home-container">
+    <h1>Bem-vindo à U.A. High School</h1>
 
-  <div class="ua-desc">
-    A U.A. High School é a instituição líder no treinamento de futuros heróis.  
-    Nosso compromisso é formar indivíduos capazes de enfrentar ameaças reais, 
-    proteger civis e agir com estratégia, ética e autocontrole.  
-    <br><br>
-    Aqui você encontrará exames oficiais, resultados, inscrições e informações sobre
-    os professores responsáveis pela sua formação heroica.
+    <div class="ua-desc">
+      A U.A. High School é a instituição líder no treinamento de futuros heróis.
+      Nosso compromisso é formar indivíduos capazes de enfrentar ameaças reais,
+      proteger civis e agir com estratégia, ética e autocontrole.
+      <br><br>
+      Aqui você encontrará exames oficiais, resultados, inscrições e informações sobre
+      os professores responsáveis pela sua formação heroica.
+    </div>
+
+    <div class="menu-grid">
+      <a href="inscricao.html" class="menu-item">
+        <span class="ua-emoji">◆</span> Inscrição para Exame
+      </a>
+      <a href="index.html" class="menu-item">
+        <span class="ua-emoji">✎</span> Prova Teórica (2ª Etapa)
+      </a>
+      <a href="resultados.html" class="menu-item">
+        <span class="ua-emoji">▣</span> Resultados do Exame
+      </a>
+      <a href="professores.html" class="menu-item">
+        <span class="ua-emoji">◎</span> Conheça nossa Equipe
+      </a>
+    </div>
   </div>
-
-  <div class="menu-grid">
-    <a href="inscricao.html" class="menu-item">
-  <span class="ua-emoji">◆</span> Inscrição para Exame
-</a>
-    <a href="index.html" class="menu-item">
-  <span class="ua-emoji">✎</span> Prova Teórica (2ª Etapa)
-</a>
-    <a href="resultados.html" class="menu-item">
-  <span class="ua-emoji">▣</span> Resultados do Exame
-</a>
-    <a href="professores.html" class="menu-item">
-  <span class="ua-emoji">◎</span> Conheça nossa Equipe
-</a>
-  </div>
-
-</div>
 
 </body>
 </html>
-
-
-
-
