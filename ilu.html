@@ -233,64 +233,57 @@
       color: var(--fg-soft);
       max-width: 45rem;
     }
-/* OLHO ILLUSION – semicerrado + blink */
+/* OLHO ILLUSION – estilo vigilância + blink */
 .eye-logo {
-  width: 42px;
-  height: 18px;
-  position: relative;
+  width: 46px;
+  height: 22px;
+  border: 2px solid #f5f5f5;
+  border-radius: 50% / 75%;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
   margin-right: 12px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
 }
 
-/* contorno do olho, pontas mais fechadas */
-.eye-logo::before {
+/* fenda luminosa no centro (olho semicerrado) */
+.eye-slit {
+  width: 70%;
+  height: 6px;
+  background: #f5f5f5;
+  border-radius: 999px;
+  position: relative;
+  animation: eye-blink 4s infinite;
+  transform-origin: center;
+}
+
+/* efeito de “scan” dentro do olho */
+.eye-slit::after {
   content: "";
   position: absolute;
   inset: 0;
-  border: 2px solid #f5f5f5;
-  border-radius: 50% / 120%;
-  /* deixa o olho mais “pontudo” nas extremidades */
-  clip-path: polygon(6% 50%, 22% 8%, 78% 8%, 94% 50%, 78% 92%, 22% 92%);
-  opacity: 0.95;
-}
-
-/* “pálpebra” + pupila (base: semicerrado) */
-.eye-pupil {
-  position: relative;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #f5f5f5;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
-  transform-origin: center;
-  transform: scaleY(0.45);          /* semicerrado padrão */
-  animation: eye-blink 4.2s infinite;
-}
-
-/* linha de pálpebra central */
-.eye-pupil::after {
-  content: "";
-  position: absolute;
-  left: -6px;
-  right: -6px;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 1px;
-  background: rgba(245, 245, 245, 0.8);
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.4) 50%,
+    transparent 100%
+  );
+  mix-blend-mode: multiply;
+  opacity: 0.55;
 }
 
 /* animação de piscar */
 @keyframes eye-blink {
   0%, 78%, 100% {
-    transform: scaleY(0.45);       /* olho meio fechado */
+    transform: scaleY(1);      /* olho semiaberto padrão */
   }
   82%, 86% {
-    transform: scaleY(0.05);       /* quase fechado (piscar) */
+    transform: scaleY(0.1);    /* fecha (pisca) */
   }
-  88%, 92% {
-    transform: scaleY(0.6);        /* abre um pouco mais depois do piscar */
+  90% {
+    transform: scaleY(0.6);    /* abre um pouco mais depois */
   }
 }
 
@@ -549,10 +542,9 @@
 
     <!-- OLHO ILLUSION -->
     <div class="eye-logo">
-      <div class="eye-pupil"></div>
+      <div class="eye-slit"></div>
     </div>
 
-    <!-- texto da Illusion continua normal -->
     <div class="brand-text">
       <div class="brand-title">ILLUSION</div>
       <div class="brand-sub">Divisão de Contenção & Resposta</div>
@@ -566,6 +558,7 @@
     <a href="#acesso">Acesso Restrito</a>
   </nav>
 </header>
+
 
     <!-- HERO -->
     <section class="hero" id="painel">
