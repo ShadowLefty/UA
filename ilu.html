@@ -233,24 +233,65 @@
       color: var(--fg-soft);
       max-width: 45rem;
     }
-.eye-icon {
-  width: 32px;
+/* OLHO ILLUSION – semicerrado + blink */
+.eye-logo {
+  width: 42px;
   height: 18px;
-  border: 2px solid #f5f5f5;
-  border-radius: 50% / 60%;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 10px;
+  margin-right: 12px;
 }
 
-.eye-icon::before {
+/* contorno do olho, pontas mais fechadas */
+.eye-logo::before {
   content: "";
-  width: 6px;
-  height: 6px;
-  background: #f5f5f5;
+  position: absolute;
+  inset: 0;
+  border: 2px solid #f5f5f5;
+  border-radius: 50% / 120%;
+  /* deixa o olho mais “pontudo” nas extremidades */
+  clip-path: polygon(6% 50%, 22% 8%, 78% 8%, 94% 50%, 78% 92%, 22% 92%);
+  opacity: 0.95;
+}
+
+/* “pálpebra” + pupila (base: semicerrado) */
+.eye-pupil {
+  position: relative;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
+  background: #f5f5f5;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
+  transform-origin: center;
+  transform: scaleY(0.45);          /* semicerrado padrão */
+  animation: eye-blink 4.2s infinite;
+}
+
+/* linha de pálpebra central */
+.eye-pupil::after {
+  content: "";
+  position: absolute;
+  left: -6px;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 1px;
+  background: rgba(245, 245, 245, 0.8);
+}
+
+/* animação de piscar */
+@keyframes eye-blink {
+  0%, 78%, 100% {
+    transform: scaleY(0.45);       /* olho meio fechado */
+  }
+  82%, 86% {
+    transform: scaleY(0.05);       /* quase fechado (piscar) */
+  }
+  88%, 92% {
+    transform: scaleY(0.6);        /* abre um pouco mais depois do piscar */
+  }
 }
 
     .hero-body b {
@@ -506,24 +547,25 @@
 <header>
   <div class="brand">
 
-    <!-- Ícone de olho -->
-    <div class="eye-icon"></div>
+    <!-- OLHO ILLUSION -->
+    <div class="eye-logo">
+      <div class="eye-pupil"></div>
+    </div>
 
-    <!-- Logo IL -->
-    <div class="brand-logo">IL</div>
-        <div class="brand-text">
-          <div class="brand-title">ILLUSION</div>
-          <div class="brand-sub">Divisão de Contenção & Resposta</div>
-        </div>
-      </div>
+    <!-- texto da Illusion continua normal -->
+    <div class="brand-text">
+      <div class="brand-title">ILLUSION</div>
+      <div class="brand-sub">Divisão de Contenção & Resposta</div>
+    </div>
+  </div>
 
-      <nav>
-        <a href="#painel">Painel</a>
-        <a href="#anomalias">Anomalias</a>
-        <a href="#logs">Logs</a>
-        <a href="#acesso">Acesso Restrito</a>
-      </nav>
-    </header>
+  <nav>
+    <a href="#painel">Painel</a>
+    <a href="#anomalias">Anomalias</a>
+    <a href="#logs">Logs</a>
+    <a href="#acesso">Acesso Restrito</a>
+  </nav>
+</header>
 
     <!-- HERO -->
     <section class="hero" id="painel">
