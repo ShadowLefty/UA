@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Illusion • Contenção e Anomalias</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    /* --------- RESET --------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #020202;
+      --bg-soft: #050505;
+      --fg: #f5f5f5;
+      --fg-soft: #c7c7c7;
+      --accent: #e53935; /* vermelho alarme */
+      --border: #2a2a2a;
+      --mono: "Consolas", "Fira Code", "SF Mono", Menlo, Monaco, monospace;
+      --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #181818 0, #020202 55%);
+      color: var(--fg);
+      font-family: var(--sans);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      overflow-x: hidden;
+    }
+
+    /* --------- VHS OVERLAY --------- */
+
+    .vhs-overlay::before,
+    .vhs-overlay::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* scanlines */
+    .vhs-overlay::before {
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.03) 0,
+        rgba(255, 255, 255, 0.03) 1px,
+        transparent 2px,
+        transparent 3px
+      );
+      mix-blend-mode: screen;
+      opacity: 0.25;
+    }
+
+    /* ruído leve + flicker */
+    @keyframes vhs-noise {
+      0% { opacity: 0.08; transform: translate3d(0,0,0); }
+      20% { opacity: 0.12; transform: translate3d(-1px, 1px, 0); }
+      40% { opacity: 0.06; transform: translate3d(1px, -1px, 0); }
+      60% { opacity: 0.1; transform: translate3d(0, 0, 0); }
+      80% { opacity: 0.05; transform: translate3d(-0.5px, 0.5px, 0); }
+      100% { opacity: 0.09; transform: translate3d(0, 0, 0); }
+    }
+
+    .vhs-overlay::after {
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          rgba(0, 0, 0, 0.3) 0,
+          rgba(0, 0, 0, 0.3) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+      animation: vhs-noise 0.4s infinite;
+      mix-blend-mode: soft-light;
+    }
+
+    /* --------- LAYOUT PRINCIPAL --------- */
+
+    .frame {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 16px 18px 36px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--fg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+
+    .brand-text {
+      line-height: 1.2;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--fg-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    nav a {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--fg-soft);
+      text-decoration: none;
+      transition: 0.15s ease;
+      font-family: var(--mono);
+    }
+
+    nav a:hover {
+      border-color: var(--fg);
+      color: var(--fg);
+      background: #101010;
+    }
+
+    /* --------- HERO --------- */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.5fr);
+      gap: 22px;
+      margin-bottom: 26px;
+    }
+
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-main {
+      padding: 18px 18px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at top, #151515 0, #050505 60%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-main::before {
+      content: "ILLUSION // INTERNAL ACCESS ONLY";
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.2);
+    }
+
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .hero-title {
+      font-size: clamp(24px, 3vw, 30px);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 10px;
+    }
+
+    .hero-subtitle {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--fg-soft);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .hero-body {
+      font-size: 13px;
+      color: var(--fg-soft);
+      max-width: 45rem;
+    }
+
+    .hero-body b {
+      color: var(--fg);
+    }
+
+    .hero-actions {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 8px 14px;
+      border: 1px solid var(--fg);
+      background: transparent;
+      color: var(--fg);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-family: var(--mono);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.15s ease;
+    }
+
+    .btn-primary {
+      background: var(--fg);
+      color: #000;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(0.9);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost:hover {
+      background: #101010;
+      transform: translateY(-1px);
+    }
+
+    .hero-side {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .panel {
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, #090909, #050505);
+      padding: 12px 12px 10px;
+      font-size: 11px;
+      font-family: var(--mono);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel-label {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--fg-soft);
+      margin-bottom: 6px;
+    }
+
+    .panel-critical {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(229, 57, 53, 0.2);
+    }
+
+    .panel-critical .panel-label {
+      color: var(--accent);
+    }
+
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 2px 0;
+    }
+
+    .status-key {
+      color: var(--fg-soft);
+    }
+
+    .status-value {
+      color: var(--fg);
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      margin-right: 4px;
+      background: #4caf50;
+    }
+
+    .status-dot.alert {
+      background: var(--accent);
+      box-shadow: 0 0 6px rgba(229, 57, 53, 0.8);
+    }
+
+    /* --------- GRID SECUNDÁRIA --------- */
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 26px;
+    }
+
+    @media (max-width: 960px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 680px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #050505;
+      padding: 12px 14px 12px;
+      font-size: 12px;
+    }
+
+    .card-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 6px;
+      color: var(--fg);
+    }
+
+    .card-sub {
+      font-size: 11px;
+      color: var(--fg-soft);
+      margin-bottom: 6px;
+    }
+
+    .card-list {
+      list-style: none;
+      font-size: 11px;
+      color: var(--fg-soft);
+    }
+
+    .card-list li::before {
+      content: "▢ ";
+      color: var(--fg-soft);
+    }
+
+    /* --------- LOGS --------- */
+
+    .logs {
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #050505;
+      padding: 14px 14px 10px;
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+
+    .logs-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .logs-body {
+      max-height: 220px;
+      overflow-y: auto;
+      border-top: 1px solid var(--border);
+      padding-top: 6px;
+    }
+
+    .log-line {
+      white-space: nowrap;
+      margin-bottom: 2px;
+      color: var(--fg-soft);
+    }
+
+    .log-time {
+      color: rgba(255, 255, 255, 0.6);
+      margin-right: 6px;
+    }
+
+    .log-tag {
+      color: var(--accent);
+      margin-right: 5px;
+    }
+
+    .log-ok {
+      color: #4caf50;
+    }
+
+    /* --------- FOOTER / TIMECODE --------- */
+
+    footer {
+      margin-top: 18px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--fg-soft);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 8px;
+    }
+
+    .timecode {
+      letter-spacing: 0.18em;
+    }
+
+    .badge {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    /* Pequeno efeito “glitch” no título principal */
+    @keyframes glitch {
+      0% { text-shadow: 2px 0 rgba(229, 57, 53, 0.25), -2px 0 rgba(0, 255, 255, 0.25); }
+      20% { text-shadow: -2px 0 rgba(229, 57, 53, 0.3), 2px 0 rgba(0, 255, 255, 0.3); }
+      40% { text-shadow: 2px 0 rgba(229, 57, 53, 0.2), -2px 0 rgba(0, 255, 255, 0.2); }
+      60% { text-shadow: 0 0 transparent; }
+      80% { text-shadow: 1px 0 rgba(229, 57, 53, 0.18), -1px 0 rgba(0, 255, 255, 0.18); }
+      100% { text-shadow: 0 0 transparent; }
+    }
+
+    .hero-title {
+      animation: glitch 2s infinite;
+    }
+  </style>
+</head>
+<body class="vhs-overlay">
+  <div class="frame">
+    <!-- HEADER -->
+    <header>
+      <div class="brand">
+        <div class="brand-logo">IL</div>
+        <div class="brand-text">
+          <div class="brand-title">ILLUSION</div>
+          <div class="brand-sub">Divisão de Contenção & Resposta</div>
+        </div>
+      </div>
+
+      <nav>
+        <a href="#painel">Painel</a>
+        <a href="#anomalias">Anomalias</a>
+        <a href="#logs">Logs</a>
+        <a href="#acesso">Acesso Restrito</a>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="painel">
+      <div class="hero-main">
+        <div class="hero-label">Nível de Clearance // CL-03–CL-05</div>
+        <h1 class="hero-title">Portal de Contenção Illusion</h1>
+        <div class="hero-subtitle">Monitoramento de alvos, anomalias e incidentes em tempo real</div>
+        <p class="hero-body">
+          Este terminal centraliza <b>exames de risco</b>, <b>protocolos de aprisionamento</b> e
+          <b>registros de campo</b> da organização <b>Illusion</b>, em cooperação com entidades
+          governamentais e agências de heróis.  
+          Qualquer acesso não autorizado será registrado e encaminhado para auditoria imediata.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#anomalias" class="btn btn-primary">▼ Consultar anomalias ativas</a>
+          <a href="#logs" class="btn btn-ghost">Ver log de incidentes</a>
+          <a href="#acesso" class="btn btn-ghost">Área de agentes</a>
+        </div>
+      </div>
+
+      <aside class="hero-side">
+        <div class="panel">
+          <div class="panel-label">Status de Operação</div>
+          <div class="status-row">
+            <span class="status-key">Rede Illusion</span>
+            <span class="status-value"><span class="status-dot"></span>Operacional</span>
+          </div>
+          <div class="status-row">
+            <span class="status-key">Zonas de contenção</span>
+            <span class="status-value">07 / 09 seguras</span>
+          </div>
+          <div class="status-row">
+            <span class="status-key">Agentes em campo</span>
+            <span class="status-value">24 ativos</span>
+          </div>
+        </div>
+
+        <div class="panel panel-critical">
+          <div class="panel-label">Alerta de Quebra de Contenção</div>
+          <div class="status-row">
+            <span class="status-key">Região</span>
+            <span class="status-value">Musutafu • Honshu</span>
+          </div>
+          <div class="status-row">
+            <span class="status-key">Designação</span>
+            <span class="status-value">IL–KETER–07</span>
+          </div>
+          <div class="status-row">
+            <span class="status-key">Prioridade</span>
+            <span class="status-value"><span class="status-dot alert"></span>NÍVEL VERMELHO</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- GRID DE SEÇÕES -->
+    <section class="grid" id="anomalias">
+      <article class="card">
+        <h2 class="card-title">Resumo de Anomalias</h2>
+        <p class="card-sub">
+          Visão geral dos objetos, entidades e fenômenos atualmente catalogados pela Illusion.
+        </p>
+        <ul class="card-list">
+          <li>Classe Seguro: 12 objetos em contenção estável.</li>
+          <li>Classe Euclídeo: 19 entidades com risco moderado.</li>
+          <li>Classe Keter: 6 ameaças de alta prioridade.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2 class="card-title">Protocolos de Campo</h2>
+        <p class="card-sub">
+          Procedimentos adotados em cooperação com agências de heróis e forças governamentais.
+        </p>
+        <ul class="card-list">
+          <li>Recuperação e transporte de alvos instáveis.</li>
+          <li>Uso limitado de Quirks em perímetros urbanos.</li>
+          <li>Isolamento de civis e controle de informação.</li>
+        </ul>
+      </article>
+
+      <article class="card" id="acesso">
+        <h2 class="card-title">Acesso de Agentes</h2>
+        <p class="card-sub">
+          Somente pessoal autorizado. Logins são rastreados e vinculados ao ID operacional.
+        </p>
+        <ul class="card-list">
+          <li>CL-01–02: Consulta parcial de arquivos.</li>
+          <li>CL-03–04: Operações de captura e suporte.</li>
+          <li>CL-05+: Autorização de contenção extrema.</li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- LOGS -->
+    <section class="logs" id="logs">
+      <div class="logs-header">
+        <span>LOG DE EVENTOS • CONSOLE ILLUSION/MAIN-01</span>
+        <span>OUTPUT STREAM // READ-ONLY</span>
+      </div>
+      <div class="logs-body">
+        <div class="log-line">
+          <span class="log-time">[23:41:02]</span>
+          <span class="log-tag">[INFO]</span>
+          Inicialização do núcleo de monitoramento Illusion v3.9 concluída.
+        </div>
+        <div class="log-line">
+          <span class="log-time">[23:41:09]</span>
+          <span class="log-tag">[OK]</span>
+          <span class="log-ok">Conexão estabelecida com rede governamental de apoio.</span>
+        </div>
+        <div class="log-line">
+          <span class="log-time">[23:42:31]</span>
+          <span class="log-tag">[WARN]</span>
+          Anomalia IL–EUCLID–21 apresentou variação de padrão comportamental.
+        </div>
+        <div class="log-line">
+          <span class="log-time">[23:43:55]</span>
+          <span class="log-tag">[ALERT]</span>
+          Quebra parcial de contenção detectada em setor Musutafu/HN–03.
+        </div>
+        <div class="log-line">
+          <span class="log-time">[23:44:02]</span>
+          <span class="log-tag">[DISPATCH]</span>
+          Unidades Illusion-04, -07 e equipe de heróis parceiros redirecionadas ao perímetro.
+        </div>
+        <div class="log-line">
+          <span class="log-time">[23:45:27]</span>
+          <span class="log-tag">[INFO]</span>
+          Canal seguro aberto para transmissão tática com agências locais.
+        </div>
+        <div class="log-line">
+          <span class="log-time">[23:47:13]</span>
+          <span class="log-tag">[FIELD]</span>
+          Relatório inicial indica presença de civis no raio de 400m do epicentro.
+        </div>
+        <div class="log-line">
+          <span class="log-time">[23:49:40]</span>
+          <span class="log-tag">[CONTAIN]</span>
+          Contenção provisória aplicada. Status: instável, monitoramento contínuo.
+        </div>
+        <div class="log-line">
+          <span class="log-time">[23:52:08]</span>
+          <span class="log-tag">[NOTE]</span>
+          Todos os registros deste console estão sujeitos à revisão da diretoria Illusion.
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="timecode">▶ 00:12:09 • ILLUSION TAPE // VHS SOURCE</div>
+      <div class="badge">Illusion • Uso interno apenas</div>
+    </footer>
+  </div>
+</body>
+</html>
