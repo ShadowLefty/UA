@@ -233,6 +233,25 @@
       color: var(--fg-soft);
       max-width: 45rem;
     }
+.eye-icon {
+  width: 32px;
+  height: 18px;
+  border: 2px solid #f5f5f5;
+  border-radius: 50% / 60%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.eye-icon::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: #f5f5f5;
+  border-radius: 50%;
+}
 
     .hero-body b {
       color: var(--fg);
@@ -484,9 +503,14 @@
 <body class="vhs-overlay">
   <div class="frame">
     <!-- HEADER -->
-    <header>
-      <div class="brand">
-        <div class="brand-logo">IL</div>
+<header>
+  <div class="brand">
+
+    <!-- Ícone de olho -->
+    <div class="eye-icon"></div>
+
+    <!-- Logo IL -->
+    <div class="brand-logo">IL</div>
         <div class="brand-text">
           <div class="brand-title">ILLUSION</div>
           <div class="brand-sub">Divisão de Contenção & Resposta</div>
