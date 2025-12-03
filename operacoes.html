@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Illusion • Estruturas e Denominações</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Mesmo favicon -->
+  <link rel="icon" type="image/png" href="https://media.tenor.com/o0mvoouLlywAAAAe/pfp.png" />
+
+  <style>
+    /* --------- RESET / BASE IGUAL A ilu.html --------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #020202;
+      --bg-soft: #050505;
+      --fg: #f5f5f5;
+      --fg-soft: #c7c7c7;
+      --accent: #e53935;
+      --border: #2a2a2a;
+      --mono: "Consolas", "Fira Code", "SF Mono", Menlo, Monaco, monospace;
+      --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      background: radial-gradient(circle at top, #181818 0, #020202 55%);
+      color: var(--fg);
+      font-family: var(--sans);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      overflow-x: hidden;
+    }
+
+    /* --------- VHS OVERLAY --------- */
+    .vhs-overlay::before,
+    .vhs-overlay::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .vhs-overlay::before {
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.03) 0,
+        rgba(255, 255, 255, 0.03) 1px,
+        transparent 2px,
+        transparent 3px
+      );
+      mix-blend-mode: screen;
+      opacity: 0.25;
+    }
+
+    @keyframes vhs-noise {
+      0% { opacity: 0.08; transform: translate3d(0,0,0); }
+      20% { opacity: 0.12; transform: translate3d(-1px, 1px, 0); }
+      40% { opacity: 0.06; transform: translate3d(1px, -1px, 0); }
+      60% { opacity: 0.1; transform: translate3d(0, 0, 0); }
+      80% { opacity: 0.05; transform: translate3d(-0.5px, 0.5px, 0); }
+      100% { opacity: 0.09; transform: translate3d(0, 0, 0); }
+    }
+
+    .vhs-overlay::after {
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          rgba(0, 0, 0, 0.3) 0,
+          rgba(0, 0, 0, 0.3) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+      animation: vhs-noise 0.4s infinite;
+      mix-blend-mode: soft-light;
+    }
+
+    /* --------- FRAME / HEADER --------- */
+    .frame {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 16px 18px 48px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .eye-video {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #f5f5f5;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.12);
+    }
+
+    .eye-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .brand-text { line-height: 1.2; }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--fg-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    nav a {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--fg-soft);
+      text-decoration: none;
+      transition: 0.15s ease;
+      font-family: var(--mono);
+    }
+
+    nav a:hover,
+    nav a:focus-visible {
+      border-color: var(--fg);
+      color: var(--fg);
+      background: #101010;
+      outline: none;
+    }
+
+    /* --------- HERO / INTRO --------- */
+    .hero {
+      margin-top: 18px;
+      margin-bottom: 24px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at top, #151515 0, #050505 60%);
+      padding: 18px 18px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "ILLUSION // STRUCTURE OVERVIEW";
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.18);
+    }
+
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .hero-title {
+      font-size: clamp(22px, 3vw, 30px);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 10px;
+    }
+
+    .hero-body {
+      font-size: 13px;
+      color: var(--fg-soft);
+      max-width: 48rem;
+      line-height: 1.7;
+    }
+
+    .hero-body b { color: var(--fg); }
+
+    /* --------- GRID / CARDS --------- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 960px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 680px) { .grid { grid-template-columns: 1fr; } }
+
+    .section-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--fg-soft);
+      margin: 14px 0 8px;
+    }
+
+    .card {
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #050505;
+      padding: 12px 14px 12px;
+      font-size: 12px;
+    }
+
+    .card-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .card-title {
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 6px;
+      color: var(--fg);
+    }
+
+    .card-sub {
+      font-size: 11px;
+      color: var(--fg-soft);
+      margin-bottom: 6px;
+    }
+
+    .card-list {
+      list-style: none;
+      font-size: 11px;
+      color: var(--fg-soft);
+      display: grid;
+      gap: 4px;
+    }
+
+    .card-list li::before {
+      content: "▢ ";
+      color: var(--fg-soft);
+    }
+
+    .badge-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #0a0a0a;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fg-soft);
+      margin-top: 4px;
+    }
+
+    /* --------- FOOTER --------- */
+    footer {
+      margin-top: 22px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--fg-soft);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 8px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .timecode { letter-spacing: 0.18em; }
+
+    .badge {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+  </style>
+</head>
+<body class="vhs-overlay">
+  <div class="frame">
+    <!-- HEADER -->
+    <header>
+      <div class="brand">
+        <div class="eye-video">
+          <video src="https://media.tenor.com/o0mvoouLlywAAAPo/pfp.mp4" autoplay loop muted playsinline></video>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">Illusion</div>
+          <div class="brand-sub">Estruturas Internas</div>
+        </div>
+      </div>
+
+      <nav>
+        <a href="ilu.html">Portal</a>
+        <a href="arquivos.html">Arquivos</a>
+        <a href="operacoes.html">Informações</a>
+        <a href="laboratorios.html">Sítios</a>
+        <a href="contato.html">Contato</a>
+      </nav>
+    </header>
+
+    <!-- HERO EXPLICATIVO -->
+    <section class="hero">
+      <div class="hero-label">Canal informativo interno</div>
+      <h1 class="hero-title">Mapa das denominações Illusion</h1>
+      <p class="hero-body">
+        Esta página compila, em um único painel, as principais <b>estruturas</b>,
+        <b>níveis de acesso</b> e <b>divisões operacionais</b> da Illusion.  
+        É um material de referência para novos membros e para agentes que
+        precisam revisar rapidamente quem faz o quê dentro da organização.
+      </p>
+    </section>
+
+    <!-- NÍVEIS DE ACESSO -->
+    <h2 class="section-title">Níveis de acesso interno</h2>
+    <section class="grid">
+      <article class="card">
+        <div class="card-tag">Classificação interna</div>
+        <h3 class="card-title">NA-B · Acesso Básico</h3>
+        <p class="card-sub">
+          Base da pirâmide. Funcionários administrativos, auxiliares de suporte
+          e pessoal que não lida diretamente com anomalias.
+        </p>
+        <ul class="card-list">
+          <li>Contato limitado com informações sensíveis.</li>
+          <li>Acesso só a áreas “cinza-claro” da Illusion.</li>
+          <li>Ideal para novos contratados em fase de adaptação.</li>
+        </ul>
+        <span class="badge-inline">Visão parcial do sistema</span>
+      </article>
+
+      <article class="card">
+        <div class="card-tag">Classificação interna</div>
+        <h3 class="card-title">NA-I · Acesso Intermediário</h3>
+        <p class="card-sub">
+          Funcionários que já lidam com dados estratégicos e operações
+          mais próximas das anomalias, mas ainda com filtros rígidos.
+        </p>
+        <ul class="card-list">
+          <li>Podem interagir com relatórios e dossiês selecionados.</li>
+          <li>Participam de operações de suporte remoto.</li>
+          <li>Treinamento contínuo para possível promoção a NA-A.</li>
+        </ul>
+        <span class="badge-inline">Contato indireto com anomalias</span>
+      </article>
+
+      <article class="card">
+        <div class="card-tag">Classificação interna</div>
+        <h3 class="card-title">NA-A · Acesso Avançado</h3>
+        <p class="card-sub">
+          Núcleo duro das operações. Agentes de campo, chefes de equipe
+          e pesquisadores que trabalham diretamente com ameaças críticas.
+        </p>
+        <ul class="card-list">
+          <li>Acesso a protocolos completos de contenção.</li>
+          <li>Autonomia tática em cenários de crise.</li>
+          <li>Responsabilidade direta sobre vidas e perímetros.</li>
+        </ul>
+        <span class="badge-inline">Operacional em zona vermelha</span>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <div class="card-tag">Classificação interna</div>
+        <h3 class="card-title">NA-E · Acesso Especial</h3>
+        <p class="card-sub">
+          Círculo mais alto da Illusion. Diretores, comandantes de programa
+          e responsáveis por decisões globais.
+        </p>
+        <ul class="card-list">
+          <li>Visão quase completa de projetos e anomalias.</li>
+          <li>Define políticas de atuação e cooperação governamental.</li>
+          <li>Autoriza medidas extremas em cenário de risco existencial.</li>
+        </ul>
+        <span class="badge-inline">Uso estritamente supervisionado</span>
+      </article>
+
+      <article class="card">
+        <div class="card-tag">Diretoria superior</div>
+        <h3 class="card-title">Conselho O5</h3>
+        <p class="card-sub">
+          Núcleo oculto da Illusion. Poucas identidades são conhecidas, e mesmo
+          dentro da organização o acesso a eles é fortemente compartimentado.
+        </p>
+        <ul class="card-list">
+          <li>Tomam decisões estratégicas de longo prazo.</li>
+          <li>Podem reescrever protocolos e reclassificar anomalias.</li>
+          <li>Cada O5 possui um escopo específico de supervisão.</li>
+        </ul>
+        <span class="badge-inline">Nível de sigilo máximo</span>
+      </article>
+
+      <article class="card">
+        <div class="card-tag">Centro de comando</div>
+        <h3 class="card-title">V.I.S. · Vortex Illusion Support</h3>
+        <p class="card-sub">
+          Coração dinâmico da Illusion. Coordena operações, redistribui recursos
+          e mantém o “vórtice” organizacional girando em alta rotação.
+        </p>
+        <ul class="card-list">
+          <li>Centraliza informações cruciais de múltiplas divisões.</li>
+          <li>Emite ordens cruzadas entre campo, pesquisa e logística.</li>
+          <li>Funciona como sala de guerra e centro de decisão rápida.</li>
+        </ul>
+        <span class="badge-inline">Fluxo constante de dados</span>
+      </article>
+    </section>
+
+    <!-- REDE FINANCEIRA / TECNOLÓGICA -->
+    <h2 class="section-title">Rede financeira e tecnológica</h2>
+    <section class="grid">
+      <article class="card">
+        <div class="card-tag">Interface com o mundo civil</div>
+        <h3 class="card-title">L.I.N.K. · Linking Illusion Network Kinetics</h3>
+        <p class="card-sub">
+          Frente “aceitável” ao público. Agência que movimenta dinheiro,
+          vagas, serviços e conexões entre empresas sob a sombra da Illusion.
+        </p>
+        <ul class="card-list">
+          <li>Gerencia transações e contratos com o mercado.</li>
+          <li>Oferece cursos, consultorias e eventos “inocentes”.</li>
+          <li>Serve como cobertura para redes mais profundas.</li>
+        </ul>
+        <span class="badge-inline">Economia e fachada institucional</span>
+      </article>
+
+      <article class="card">
+        <div class="card-tag">Infraestrutura técnica</div>
+        <h3 class="card-title">I.N.T. · Illusion Nexus Technology</h3>
+        <p class="card-sub">
+          Nó central de informação e conexão. Funciona como o terminal
+          em que tudo converge: dados, comunicações e protocolos
+          tecnológicos da Illusion.
+        </p>
+        <ul class="card-list">
+          <li>Coordena redes internas e externas de informação.</li>
+          <li>Administra fluxos entre bases, laboratórios e campo.</li>
+          <li>Serve de ponte entre pesquisa, operação e direção.</li>
+        </ul>
+        <span class="badge-inline">Hub de conexões</span>
+      </article>
+
+      <article class="card">
+        <div class="card-tag">Rede de produção</div>
+        <h3 class="card-title">T.I.N. · Technological Illusion Network</h3>
+        <p class="card-sub">
+          Cadeia inteira de produção tecnológica da Illusion. Da extração
+          de materiais até o robô final em campo.
+        </p>
+        <ul class="card-list">
+          <li>Responsável pelo ciclo completo do metal e componentes.</li>
+          <li>Produz maquinário industrial e robôs especializados.</li>
+          <li>Garante qualidade e padronização de equipamentos críticos.</li>
+        </ul>
+        <span class="badge-inline">Linha de produção estratégica</span>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <div class="card-tag">Engenharia aplicada</div>
+        <h3 class="card-title">G.E.A.R. · Gadgets, Engineering, and Research</h3>
+        <p class="card-sub">
+          Laboratório vivo de invenções. Mistura criatividade, protótipos
+          e engenharia pesada para gerar as ferramentas da Illusion.
+        </p>
+        <ul class="card-list">
+          <li>Desenvolve gadgets de campo, sensores e armaduras.</li>
+          <li>Testa novas tecnologias oriundas de anomalias.</li>
+          <li>Trabalha junto com T.I.N. para escalar produção.</li>
+        </ul>
+        <span class="badge-inline">Prototipagem e inovação</span>
+      </article>
+
+      <!-- espaço propositalmente vazio em telas grandes para respiro visual -->
+      <article class="card" style="opacity:0; pointer-events:none;"></article>
+      <article class="card" style="opacity:0; pointer-events:none;"></article>
+    </section>
+
+    <!-- DIVISÕES OPERACIONAIS -->
+    <h2 class="section-title">Divisões operacionais</h2>
+    <section class="grid">
+      <article class="card">
+        <div class="card-tag">Operações principais</div>
+        <h3 class="card-title">R.E.C. · Recon, Enforce, Contain</h3>
+        <p class="card-sub">
+          Força padrão da Illusion quando o assunto é lidar com anomalias
+          perigosas do início ao fim.
+        </p>
+        <ul class="card-list">
+          <li>Reconhecimento: localizar e identificar anomalias.</li>
+          <li>Execução: capturar ou neutralizar ameaças em campo.</li>
+          <li>Contenção: manter as anomalias estabilizadas em instalações seguras.</li>
+        </ul>
+        <span class="badge-inline">Linha de frente operacional</span>
+      </article>
+
+      <article class="card">
+        <div class="card-tag">Controle de dissidentes</div>
+        <h3 class="card-title">S.H.A.D.E. · Secure, Hold, and Detain Enforcers</h3>
+        <p class="card-sub">
+          Focada em gente problemática: ex-agentes, executores fora de controle
+          e quem tenta sabotar a Illusion.
+        </p>
+        <ul class="card-list">
+          <li>Monitora indivíduos que conhecem demais.</li>
+          <li>Executa detenções cirúrgicas e silenciosas.</li>
+          <li>Previne vazamentos internos e traições.</li>
+        </ul>
+        <span class="badge-inline">Segurança contra internos hostis</span>
+      </article>
+
+      <article class="card">
+        <div class="card-tag">Neutralização direta</div>
+        <h3 class="card-title">V.A.N.G. · Vanguard Anomaly Neutralization Group</h3>
+        <p class="card-sub">
+          Unidade de choque. Quando não dá pra conviver com a anomalia,
+          é a VANG que entra em cena.
+        </p>
+        <ul class="card-list">
+          <li>Operações de neutralização em alta prioridade.</li>
+          <li>Uso de tecnologia e táticas agressivas.</li>
+          <li>Atua lado a lado com R.E.C. em cenários extremos.</li>
+        </ul>
+        <span class="badge-inline">Resposta letal autorizada</span>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <div class="card-tag">Patrulha e vigilância</div>
+        <h3 class="card-title">E.S.P. · Expeditionary Secure Patrol</h3>
+        <p class="card-sub">
+          Patrulha especializada em zonas sensíveis, perímetros prolongados
+          e áreas que não podem ficar sem olho em cima.
+        </p>
+        <ul class="card-list">
+          <li>Supervisiona regiões críticas e rotas de interesse.</li>
+          <li>Opera sistemas de vigilância e câmeras avançadas.</li>
+          <li>Coordena-se com HALO em situações de lockdown.</li>
+        </ul>
+        <span class="badge-inline">Monitoramento persistente</span>
+      </article>
+
+      <article class="card">
+        <div class="card-tag">Lockdown de alta prioridade</div>
+        <h3 class="card-title">H.A.L.O. · High-priority Anomaly Lockdown Operations</h3>
+        <p class="card-sub">
+          Especialistas em trancar tudo. São chamados quando a área inteira
+          precisa ser isolada para ninguém notar que o impossível aconteceu.
+        </p>
+        <ul class="card-list">
+          <li>Implementa lockdown em zonas com anomalias críticas.</li>
+          <li>Coordena evacuação silenciosa de civis.</li>
+          <li>Trabalha junto com SEA para limpar o cenário depois.</li>
+        </ul>
+        <span class="badge-inline">Confinamento de grandes áreas</span>
+      </article>
+
+      <article class="card">
+        <div class="card-tag">Limpeza de rastros</div>
+        <h3 class="card-title">S.E.A. · Sanitation and Evidence Abatement</h3>
+        <p class="card-sub">
+          Os que entram depois que tudo “acaba”. Limpam, reconstroem e
+          apagam qualquer rastro do que realmente ocorreu.
+        </p>
+        <ul class="card-list">
+          <li>Remove evidências físicas e digitais.</li>
+          <li>Auxilia LINK a reconstruir versões públicas “aceitáveis”.</li>
+          <li>Refaz cenários para parecer acidentes comuns.</li>
+        </ul>
+        <span class="badge-inline">Desaparecimento de evidências</span>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <div class="card-tag">Alvos e captura</div>
+        <h3 class="card-title">T.R.A.P. · Target Retrieval and Apprehension Protocol</h3>
+        <p class="card-sub">
+          Direcionada para alvos inteligentes: vilões, agentes hostis,
+          entidades capazes de diálogo e barganha.
+        </p>
+        <ul class="card-list">
+          <li>Opera com foco em captura, não só neutralização.</li>
+          <li>Extrai informação para alimentar outras divisões.</li>
+          <li>Ajuda a projetar a Illusion como “agência de heróis”.</li>
+        </ul>
+        <span class="badge-inline">Operações de caça dirigida</span>
+      </article>
+
+      <article class="card">
+        <div class="card-tag">Pesquisa e arquivo</div>
+        <h3 class="card-title">A.R.C. · Archiving and Research Center</h3>
+        <p class="card-sub">
+          Biblioteca viva da Illusion. Tudo que é descoberto, estudado,
+          testado e reaproveitado passa, em algum momento, pelo ARC.
+        </p>
+        <ul class="card-list">
+          <li>Pesquisa novas tecnologias e métodos de combate.</li>
+          <li>Estuda corpos estranhos, fenômenos e padrões anômalos.</li>
+          <li>Arquiva e organiza dados para uso futuro.</li>
+        </ul>
+        <span class="badge-inline">Memória longa da organização</span>
+      </article>
+
+      <!-- espaçamento final -->
+      <article class="card" style="opacity:0; pointer-events:none;"></article>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="timecode">▶ 01:47:09 • Illusion Tape // VHS Source 63</div>
+      <div class="badge">Illusion • Documento de referência interna</div>
+    </footer>
+  </div>
+</body>
+</html>

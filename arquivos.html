@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Illusion • Arquivos Seguros</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Mesmo favicon do ilu.html -->
+  <link rel="icon" type="image/png" href="https://media.tenor.com/o0mvoouLlywAAAAe/pfp.png" />
+
+  <style>
+    /* --------- RESET / BASE IGUAL AO ilu.html --------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #020202;
+      --bg-soft: #050505;
+      --fg: #f5f5f5;
+      --fg-soft: #c7c7c7;
+      --accent: #e53935;
+      --border: #2a2a2a;
+      --mono: "Consolas", "Fira Code", "SF Mono", Menlo, Monaco, monospace;
+      --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      background: radial-gradient(circle at top, #181818 0, #020202 55%);
+      color: var(--fg);
+      font-family: var(--sans);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      overflow-x: hidden;
+    }
+
+    /* --------- VHS OVERLAY (igual ilu.html) --------- */
+    .vhs-overlay::before,
+    .vhs-overlay::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .vhs-overlay::before {
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.03) 0,
+        rgba(255, 255, 255, 0.03) 1px,
+        transparent 2px,
+        transparent 3px
+      );
+      mix-blend-mode: screen;
+      opacity: 0.25;
+    }
+
+    @keyframes vhs-noise {
+      0% { opacity: 0.08; transform: translate3d(0,0,0); }
+      20% { opacity: 0.12; transform: translate3d(-1px, 1px, 0); }
+      40% { opacity: 0.06; transform: translate3d(1px, -1px, 0); }
+      60% { opacity: 0.1; transform: translate3d(0, 0, 0); }
+      80% { opacity: 0.05; transform: translate3d(-0.5px, 0.5px, 0); }
+      100% { opacity: 0.09; transform: translate3d(0, 0, 0); }
+    }
+
+    .vhs-overlay::after {
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          rgba(0, 0, 0, 0.3) 0,
+          rgba(0, 0, 0, 0.3) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+      animation: vhs-noise 0.4s infinite;
+      mix-blend-mode: soft-light;
+    }
+
+    /* --------- FRAME / HEADER IGUAIS --------- */
+    .frame {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 16px 18px 48px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .eye-video {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #f5f5f5;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.12);
+    }
+
+    .eye-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .brand-text { line-height: 1.2; }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--fg-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    nav a {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--fg-soft);
+      text-decoration: none;
+      transition: 0.15s ease;
+      font-family: var(--mono);
+    }
+
+    nav a:hover,
+    nav a:focus-visible {
+      border-color: var(--fg);
+      color: var(--fg);
+      background: #101010;
+      outline: none;
+    }
+
+    /* --------- PAINEL DE ACESSO --------- */
+    .access-main {
+      margin-top: 20px;
+      max-width: 960px;
+    }
+
+    .panel-access {
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at top, #151515 0, #050505 60%);
+      padding: 18px 18px 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel-access::before {
+      content: "ILLUSION // ACCESS LOGGED";
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.18);
+    }
+
+    .badge-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(229, 57, 53, 0.4);
+      background: rgba(229, 57, 53, 0.12);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #ffb3b1;
+      margin-bottom: 10px;
+    }
+
+    .panel-access h1 {
+      font-size: 18px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      font-family: var(--mono);
+    }
+
+    .panel-access p {
+      color: var(--fg-soft);
+      line-height: 1.6;
+      font-size: 13px;
+      max-width: 42rem;
+      margin-bottom: 10px;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .form-field label {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--fg-soft);
+      font-family: var(--mono);
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .form-field input {
+      background: #0f0f0f;
+      border: 1px solid var(--border);
+      color: var(--fg);
+      padding: 10px 10px;
+      border-radius: 8px;
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    .form-field input:focus-visible {
+      border-color: var(--accent);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(229, 57, 53, 0.2);
+    }
+
+    .access-actions {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      border-radius: 999px;
+      padding: 9px 15px;
+      border: 1px solid var(--fg);
+      background: var(--fg);
+      color: #000;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-family: var(--mono);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.15s ease;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(0.9);
+      transform: translateY(-1px);
+    }
+
+    .error {
+      color: #ff8c8a;
+      font-family: var(--mono);
+      font-size: 11px;
+      min-height: 16px;
+      margin-top: 4px;
+    }
+
+    /* --------- BLOCO PROTEGIDO (ROSTER + TABELA) --------- */
+    .protected-block {
+      display: none;
+      margin-top: 18px;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
+
+    .protected-block.visible {
+      display: block;
+    }
+
+    .protected-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 8px;
+      color: var(--fg-soft);
+    }
+
+    .roster {
+      margin-bottom: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .roster .card {
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #050505;
+      padding: 14px;
+      font-size: 12px;
+    }
+
+    .roster .card h3 {
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 13px;
+      margin-bottom: 4px;
+      font-family: var(--mono);
+    }
+
+    .roster .card small {
+      color: var(--fg-soft);
+      font-family: var(--mono);
+      display: block;
+      margin-bottom: 8px;
+      font-size: 11px;
+    }
+
+    .roster .card p {
+      color: var(--fg);
+      margin: 0;
+      line-height: 1.5;
+      font-size: 12px;
+    }
+
+    /* --------- TABELA DE ARQUIVOS --------- */
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--mono);
+      font-size: 11px;
+      margin-top: 8px;
+    }
+
+    .table th,
+    .table td {
+      padding: 8px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+
+    .table th {
+      color: var(--fg-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: #080808;
+    }
+
+    .table td {
+      color: var(--fg);
+      background: #060606;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      margin-right: 4px;
+      background: #4caf50;
+      box-shadow: 0 0 6px rgba(76, 175, 80, 0.45);
+    }
+
+    .status-dot.alert {
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(229, 57, 53, 0.8);
+    }
+
+    /* --------- FOOTER / TIMECODE --------- */
+    footer {
+      margin-top: 22px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--fg-soft);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 8px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .timecode { letter-spacing: 0.18em; }
+
+    .badge {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+  </style>
+</head>
+<body class="vhs-overlay">
+  <div class="frame">
+    <!-- HEADER -->
+    <header>
+      <div class="brand">
+        <div class="eye-video">
+          <video src="https://media.tenor.com/o0mvoouLlywAAAPo/pfp.mp4" autoplay loop muted playsinline></video>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">Illusion</div>
+          <div class="brand-sub">Arquivos Seguros</div>
+        </div>
+      </div>
+
+      <nav>
+        <a href="ilu.html">Portal</a>
+        <a href="arquivos.html">Arquivos</a>
+        <a href="operacoes.html">Informações</a>
+        <a href="laboratorios.html">Sítios</a>
+        <a href="contato.html">Contato</a>
+      </nav>
+    </header>
+
+    <!-- CONTEÚDO -->
+    <main class="access-main">
+      <section class="panel-access">
+        <span class="badge-inline">Nível Vermelho · Necessário usuário e senha</span>
+        <h1>Acesso aos membros</h1>
+        <p>
+          Somente pessoal autorizado pode consultar o quadro de membros e os
+          arquivos classificados da Illusion. Todas as consultas são registradas e
+          auditadas.
+        </p>
+
+        <form id="login-form" class="form-grid">
+          <div class="form-field">
+            <label for="user">Usuário</label>
+            <input id="user" name="user" autocomplete="username" required placeholder="ex: sentinel" />
+          </div>
+          <div class="form-field">
+            <label for="pass">Senha</label>
+            <input id="pass" name="pass" type="password" autocomplete="current-password" required placeholder="••••••••" />
+          </div>
+
+          <div class="access-actions">
+            <button type="submit" class="btn-primary">Validar credenciais</button>
+            <span class="error" id="error"></span>
+          </div>
+        </form>
+
+        <!-- BLOCO PROTEGIDO (SÓ APARECE APÓS LOGIN) -->
+        <section class="protected-block" id="protected-block">
+          <div class="protected-title">Quadro de membros</div>
+          <div class="roster">
+            <div class="card">
+              <h3>Diretor Fantasma</h3>
+              <small>Controle estratégico</small>
+              <p>Coordena operações globais e autoriza protocolos de blackout informacional.</p>
+            </div>
+            <div class="card">
+              <h3>Arconte</h3>
+              <small>Pesquisa Classificada</small>
+              <p>Especialista em anomalias meta-humanas, mantém linhas de estudo em sigilo profundo.</p>
+            </div>
+            <div class="card">
+              <h3>Helix</h3>
+              <small>Chefe de Laboratórios</small>
+              <p>Integra tecnologia de drones, IA tática e biometria para contenção automatizada.</p>
+            </div>
+            <div class="card">
+              <h3>Prisma</h3>
+              <small>Operações de Campo</small>
+              <p>Lidera equipes de coleta e infiltração; habilitada para conversão de narrativas públicas.</p>
+            </div>
+            <div class="card">
+              <h3>Vox</h3>
+              <small>Comunicações Seguras</small>
+              <p>Administra rádios criptografados, rastreia vazamentos e neutraliza transmissões hostis.</p>
+            </div>
+            <div class="card">
+              <h3>Ward</h3>
+              <small>Segurança Interna</small>
+              <p>Responsável por auditoria de acessos, blindagem digital e resposta a intrusão.</p>
+            </div>
+          </div>
+
+          <div class="protected-title" style="margin-top: 4px;">Arquivos classificados</div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Designação</th>
+                <th>Classe</th>
+                <th>Setor</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>IL-019</td>
+                <td>Seguro</td>
+                <td>Arquivo Frio</td>
+                <td><span class="status-dot"></span>Estável</td>
+              </tr>
+              <tr>
+                <td>IL-087</td>
+                <td>Euclídeo</td>
+                <td>Subsolo B</td>
+                <td><span class="status-dot"></span>Monitorado</td>
+              </tr>
+              <tr>
+                <td>IL-212</td>
+                <td>Keter</td>
+                <td>Camada Vermelha</td>
+                <td><span class="status-dot alert"></span>Isolamento total</td>
+              </tr>
+              <tr>
+                <td>IL-404</td>
+                <td>Taumiel</td>
+                <td>Diretoria</td>
+                <td><span class="status-dot"></span>Uso estratégico</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="timecode">▶ 01:03:27 • Illusion Tape // VHS Source 42</div>
+      <div class="badge">Illusion • Consulta de arquivos monitorada</div>
+    </footer>
+  </div>
+
+  <script>
+    const form = document.getElementById('login-form');
+    const protectedBlock = document.getElementById('protected-block');
+    const error = document.getElementById('error');
+
+    const VALID_USER = 'illusion';
+    const VALID_PASS = 'cipher-21';
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const user = form.user.value.trim();
+      const pass = form.pass.value.trim();
+
+      if (user === VALID_USER && pass === VALID_PASS) {
+        protectedBlock.classList.add('visible');
+        error.textContent = '';
+        // opcional: desabilitar ou esconder o form depois de logar
+        form.style.display = 'none';
+      } else {
+        error.textContent = 'Credenciais inválidas ou insuficientes.';
+      }
+    });
+  </script>
+</body>
+</html>

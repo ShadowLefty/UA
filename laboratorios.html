@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Illusion • Sítios de Contenção</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Mesmo favicon da Illusion -->
+  <link rel="icon" type="image/png" href="https://media.tenor.com/o0mvoouLlywAAAAe/pfp.png" />
+
+  <style>
+    /* --------- RESET / BASE --------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #020202;
+      --bg-soft: #050505;
+      --fg: #f5f5f5;
+      --fg-soft: #c7c7c7;
+      --accent: #e53935;
+      --border: #2a2a2a;
+      --mono: "Consolas", "Fira Code", "SF Mono", Menlo, Monaco, monospace;
+      --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      background: radial-gradient(circle at top, #181818 0, #020202 55%);
+      color: var(--fg);
+      font-family: var(--sans);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      overflow-x: hidden;
+    }
+
+    /* --------- VHS OVERLAY --------- */
+    .vhs-overlay::before,
+    .vhs-overlay::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .vhs-overlay::before {
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.03) 0,
+        rgba(255, 255, 255, 0.03) 1px,
+        transparent 2px,
+        transparent 3px
+      );
+      mix-blend-mode: screen;
+      opacity: 0.25;
+    }
+
+    @keyframes vhs-noise {
+      0%   { opacity: 0.08; transform: translate3d(0,0,0); }
+      20%  { opacity: 0.12; transform: translate3d(-1px, 1px, 0); }
+      40%  { opacity: 0.06; transform: translate3d(1px,-1px, 0); }
+      60%  { opacity: 0.10; transform: translate3d(0,0,0); }
+      80%  { opacity: 0.05; transform: translate3d(-0.5px,0.5px,0); }
+      100% { opacity: 0.09; transform: translate3d(0,0,0); }
+    }
+
+    .vhs-overlay::after {
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          rgba(0,0,0,0.3) 0,
+          rgba(0,0,0,0.3) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+      animation: vhs-noise 0.4s infinite;
+      mix-blend-mode: soft-light;
+    }
+
+    /* --------- FRAME / HEADER --------- */
+    .frame {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 16px 18px 48px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .eye-video {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #f5f5f5;
+      box-shadow: 0 0 8px rgba(255,255,255,0.12);
+    }
+
+    .eye-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .brand-text { line-height: 1.2; }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--fg-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    nav a {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--fg-soft);
+      text-decoration: none;
+      transition: 0.15s ease;
+      font-family: var(--mono);
+    }
+
+    nav a:hover,
+    nav a:focus-visible {
+      border-color: var(--fg);
+      color: var(--fg);
+      background: #101010;
+      outline: none;
+    }
+
+    /* --------- HERO / INTRO --------- */
+    .hero {
+      margin-top: 14px;
+      margin-bottom: 24px;
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+    }
+
+    .hero-main {
+      padding: 18px 18px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at top, #151515 0, #050505 60%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-main::before {
+      content: "ILLUSION // NETWORKED SITES";
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.18);
+    }
+
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .hero-title {
+      font-size: clamp(22px, 2.8vw, 30px);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 8px;
+    }
+
+    .hero-subtitle {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--fg-soft);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .hero-body {
+      font-size: 13px;
+      color: var(--fg-soft);
+      max-width: 46rem;
+    }
+
+    .hero-body b { color: var(--fg); }
+
+    .hero-side {
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #050505;
+      padding: 14px 14px 12px;
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+
+    .hero-side-title {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 8px;
+      color: var(--fg);
+    }
+
+    .hero-side p {
+      color: var(--fg-soft);
+      line-height: 1.6;
+    }
+
+    /* --------- TAGS / CHIPS --------- */
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+      margin-bottom: 4px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      background: #080808;
+      color: var(--fg-soft);
+    }
+
+    .tag-rec   { border-color: #f44336; color: #ff9990; }
+    .tag-shade { border-color: #607d8b; color: #b0c4cf; }
+    .tag-trap  { border-color: #9c27b0; color: #e1b6ff; }
+    .tag-sea   { border-color: #00bcd4; color: #a5ecff; }
+    .tag-esp   { border-color: #ffc107; color: #ffe6a3; }
+    .tag-vang  { border-color: #e91e63; color: #ffc0d8; }
+    .tag-halo  { border-color: #ff9800; color: #ffd7a3; }
+    .tag-link  { border-color: #8bc34a; color: #d9ffb3; }
+    .tag-arc   { border-color: #3f51b5; color: #c3cfff; }
+    .tag-vis   { border-color: #9e9e9e; color: #e0e0e0; }
+    .tag-illusion { border-color: #ffffff33; color: #ffffffaa; }
+
+    /* --------- GRID DE SÍTIOS --------- */
+    .sites {
+      display: grid;
+      grid-template-columns: 2fr 1.2fr;
+      gap: 18px;
+    }
+
+    @media (max-width: 1000px) {
+      .sites { grid-template-columns: 1fr; }
+    }
+
+    .site-card {
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #050505;
+      padding: 16px 16px 14px;
+      font-size: 12px;
+    }
+
+    .site-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+
+    .site-title {
+      font-family: var(--mono);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 12px;
+    }
+
+    .site-code {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--fg-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .site-desc {
+      font-size: 12px;
+      color: var(--fg-soft);
+      margin-bottom: 10px;
+    }
+
+    .site-grid {
+      margin-top: 8px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    .area-card {
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #040404;
+      padding: 10px 11px 9px;
+      font-size: 11px;
+    }
+
+    .area-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 4px;
+      color: var(--fg);
+    }
+
+    .area-body {
+      color: var(--fg-soft);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .area-meta {
+      margin-top: 6px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--fg-soft);
+      opacity: 0.85;
+    }
+
+    /* --------- FOOTER --------- */
+    footer {
+      margin-top: 22px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--fg-soft);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 8px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .timecode { letter-spacing: 0.18em; }
+
+    .badge {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+  </style>
+</head>
+<body class="vhs-overlay">
+  <div class="frame">
+    <!-- HEADER -->
+    <header>
+      <div class="brand">
+        <div class="eye-video">
+          <video src="https://media.tenor.com/o0mvoouLlywAAAPo/pfp.mp4" autoplay loop muted playsinline></video>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">Illusion</div>
+          <div class="brand-sub">Sítios de Contenção & Infraestrutura</div>
+        </div>
+      </div>
+
+      <nav>
+        <a href="ilu.html">Portal</a>
+        <a href="arquivos.html">Arquivos</a>
+        <a href="operacoes.html">Informações</a>
+        <a href="laboratorios.html">Sítios</a>
+        <a href="contato.html">Contato</a>
+      </nav>
+    </header>
+
+    <!-- HERO INTRO SÍTIOS -->
+    <section class="hero">
+      <article class="hero-main">
+        <div class="hero-label">Mapa interno de instalações</div>
+        <h1 class="hero-title">Sítios Illusion</h1>
+        <p class="hero-subtitle">Estrutura física da Illusion em camadas de segurança.</p>
+        <p class="hero-body">
+          Cada <b>Sítio</b> é um complexo fechado, construído para suportar operações prolongadas de
+          contenção, pesquisa e logística. As alas são organizadas por função e vinculadas às
+          divisões REC, SHADE, VANG, HALO, SEA, LINK, ESP, ARC, VIS e ao núcleo administrativo
+          da Illusion. Esta página resume a arquitetura interna do <b>Sítio-01</b> e rascunhos de
+          outros sítios auxiliares.
+        </p>
+      </article>
+
+      <aside class="hero-side">
+        <div class="hero-side-title">Status de ocupação</div>
+        <p>
+          • Sítio-01: COMPLEXO PRINCIPAL · Capacidade máxima<br>
+          • Sítio-02: Núcleo de pesquisa avançada · Expansão em andamento<br>
+          • Sítio-03: Instalação móvel / redirecionamento tático<br><br>
+          Tráfego interno e fluxos de agentes são monitorados em tempo real a partir
+          do Centro de Vigilância e do Laboratório de Análise de Vigilância.
+        </p>
+      </aside>
+    </section>
+
+    <!-- SÍTIOS -->
+    <section class="sites">
+      <!-- SÍTIO-01 COMPLETO -->
+      <article class="site-card">
+        <header class="site-header">
+          <div class="site-title">Sítio-01 • Complexo Operacional Principal</div>
+          <div class="site-code">Camadas REC / SHADE / SEA / ESP / VANG / HALO / LINK / ARC / VIS</div>
+        </header>
+        <p class="site-desc">
+          Primeiro complexo plenamente funcional da Illusion. Abriga centros de captura,
+          interrogatório, vigilância, logística, suporte médico, pesquisa e setor social
+          para agentes em serviço prolongado.
+        </p>
+
+        <div class="site-grid">
+          <!-- BLOCO TÁTICO REC + SHADE -->
+          <div class="area-card">
+            <div class="tag-row">
+              <span class="tag tag-rec">R.E.C.</span>
+              <span class="tag tag-shade">S.H.A.D.E.</span>
+              <span class="tag tag-illusion">Illusion</span>
+            </div>
+            <h3 class="area-title">Bloco Tático de Contenção</h3>
+            <p class="area-body">
+              Núcleo duro do Sítio-01, onde ocorrem captura, contenção ativa e triagem imediata
+              de ameaças. 
+            </p>
+            <p class="area-meta">
+              Áreas: Centro de Comunicação • Celulares de Confinamento •
+              Salas de Operações Secretas • Centro de Monitoramento / Rastreamento •
+              Salas de Interrogatório • Centro de Treinamento Tático.
+            </p>
+          </div>
+
+          <!-- BLOCO TRAP / LOCKDOWN / MISSÕES -->
+          <div class="area-card">
+            <div class="tag-row">
+              <span class="tag tag-rec">R.E.C.</span>
+              <span class="tag tag-trap">T.R.A.P.</span>
+              <span class="tag tag-halo">H.A.L.O.</span>
+              <span class="tag tag-vang">V.A.N.G.</span>
+            </div>
+            <h3 class="area-title">Ala de Operações Especiais</h3>
+            <p class="area-body">
+              Coordenadoria direta de operações em campo, lockdowns e neutralização de alvos
+              prioritários.
+            </p>
+            <p class="area-meta">
+              Áreas: Centro de Captura de Alvos • Salas de Planejamento de Missões •
+              Centro de Operações Táticas • Salas de Planejamento de Lockdown •
+              Gerenciamento de Lockdown • Bankers (zona de recursos e privilégios).
+            </p>
+          </div>
+
+          <!-- BLOCO SEA + LINK -->
+          <div class="area-card">
+            <div class="tag-row">
+              <span class="tag tag-rec">R.E.C.</span>
+              <span class="tag tag-sea">S.E.A.</span>
+              <span class="tag tag-link">L.I.N.K.</span>
+            </div>
+            <h3 class="area-title">Infraestrutura & Limpeza de Evidências</h3>
+            <p class="area-body">
+              Camada que conecta a Illusion ao mundo externo e apaga rastros das operações.
+            </p>
+            <p class="area-meta">
+              Áreas: Centro de Comunicação com a LINK • Salas de Análise de Evidências •
+              Armazém de Equipamentos de Limpeza • Oficina de Reconstituição •
+              Armazéns de Equipamentos (LINK).
+            </p>
+          </div>
+
+          <!-- BLOCO ESP + VIGILÂNCIA -->
+          <div class="area-card">
+            <div class="tag-row">
+              <span class="tag tag-rec">R.E.C.</span>
+              <span class="tag tag-esp">E.S.P.</span>
+            </div>
+            <h3 class="area-title">Patrulha & Vigilância</h3>
+            <p class="area-body">
+              Rede de monitoramento permanente do Sítio-01 e zonas externas próximas.
+            </p>
+            <p class="area-meta">
+              Áreas: Salas de Briefing de Segurança • Centro de Controle de Acesso •
+              Laboratório de Análise de Vigilância • Salas de Operações de Campo •
+              Centro de Vigilância.
+            </p>
+          </div>
+
+          <!-- BLOCO VANG + LABORATÓRIOS -->
+          <div class="area-card">
+            <div class="tag-row">
+              <span class="tag tag-rec">R.E.C.</span>
+              <span class="tag tag-vang">V.A.N.G.</span>
+            </div>
+            <h3 class="area-title">Complexo de Anomalias</h3>
+            <p class="area-body">
+              Conjunto especializado em captura, estudo e neutralização física de anomalias.
+            </p>
+            <p class="area-meta">
+              Áreas: Salas de Detetização • Centro de Treinamento de Captura •
+              Armazém de Equipamento Especializado • Laboratório de Análise de Anomalias •
+              Centro de Neutralização de Anomalias.
+            </p>
+          </div>
+
+          <!-- BLOCO ARC + PESQUISA -->
+          <div class="area-card">
+            <div class="tag-row">
+              <span class="tag tag-arc">A.R.C.</span>
+              <span class="tag tag-illusion">Illusion</span>
+            </div>
+            <h3 class="area-title">Núcleo de Arquivos & Pesquisa</h3>
+            <p class="area-body">
+              Camada que guarda e cruza dados de todas as operações, servindo como memória
+              longa da Illusion.
+            </p>
+            <p class="area-meta">
+              Áreas: Laboratórios de Pesquisa • Centro de Dados •
+              Laboratório de Análise de Informações • Salas de Conferência de Pesquisa •
+              Salas de Catalogação • Biblioteca de Arquivos.
+            </p>
+          </div>
+
+          <!-- BLOCO VIS + ADMIN -->
+          <div class="area-card">
+            <div class="tag-row">
+              <span class="tag tag-vis">V.I.S.</span>
+              <span class="tag tag-illusion">Illusion</span>
+            </div>
+            <h3 class="area-title">Administração & Treinamento</h3>
+            <p class="area-body">
+              Ala que concentra escritórios administrativos e formação contínua de agentes.
+            </p>
+            <p class="area-meta">
+              Áreas: Centro de Treinamento Administrativo • Escritórios Administrativos •
+              Salas de Conferência interna • Hangar (logística de entrada/saída).
+            </p>
+          </div>
+
+          <!-- BLOCO GERAL / SOCIAL -->
+          <div class="area-card">
+            <div class="tag-row">
+              <span class="tag tag-illusion">Illusion</span>
+            </div>
+            <h3 class="area-title">Infraestrutura Geral & Social</h3>
+            <p class="area-body">
+              Espaços de circulação, descanso e atendimento médico necessários para
+              manter o Sítio-01 habitável por longos períodos.
+            </p>
+            <p class="area-meta">
+              Áreas: Refeitório • Corredores • Enfermaria • Off Geral •
+              Anúncios Gerais • Salas de Entrevista.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- SÍTIO-02 / SÍTIO-03 – RASCUNHOS PERSONALIZADOS -->
+      <aside class="site-card">
+        <header class="site-header">
+          <div class="site-title">Sítio-02 & Sítio-03</div>
+          <div class="site-code">Rascunhos de instalações auxiliares</div>
+        </header>
+        <p class="site-desc">
+          Sítios dedicados a pesquisa avançada, testes de campo e estruturas móveis.
+          Podem ser expandidos depois com áreas específicas do servidor conforme
+          novas alas forem criadas em RP.
+        </p>
+
+        <div class="site-grid">
+          <div class="area-card">
+            <div class="tag-row">
+              <span class="tag tag-arc">A.R.C.</span>
+              <span class="tag tag-vang">V.A.N.G.</span>
+            </div>
+            <h3 class="area-title">Sítio-02 • Núcleo Experimental</h3>
+            <p class="area-body">
+              Focado em experimentos de longo prazo, protótipos de contenção e
+              testes de novos protocolos de captura. Ideal para justificar
+              laboratórios bem “malucos”.
+            </p>
+            <p class="area-meta">
+              Sugestão de alas futuras: Laboratório de Prototipagem • Câmara de Teste Memético •
+              Bloco de Simulações Urbanas.
+            </p>
+          </div>
+
+          <div class="area-card">
+            <div class="tag-row">
+              <span class="tag tag-rec">R.E.C.</span>
+              <span class="tag tag-esp">E.S.P.</span>
+              <span class="tag tag-halo">H.A.L.O.</span>
+            </div>
+            <h3 class="area-title">Sítio-03 • Plataforma Móvel</h3>
+            <p class="area-body">
+              Instalação projetada para ser deslocada ou montada perto de zonas de crise.
+              Serve como “base avançada” em operações de grande escala.
+            </p>
+            <p class="area-meta">
+              Sugestão de alas futuras: Centro de Desembarque • Torre de Comunicação Móvel •
+              Hangar Modular de Mechas / Veículos.
+            </p>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="timecode">▶ 02:19:44 • Illusion Tape // Site-01 Layout Log</div>
+      <div class="badge">Illusion • Mapa interno de sítios</div>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Illusion • Carreiras & Oportunidades</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Mesmo favicon dos outros painéis -->
+  <link rel="icon" type="image/png" href="https://media.tenor.com/o0mvoouLlywAAAAe/pfp.png" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #f4f4f7;
+      --bg-soft: #ffffff;
+      --fg: #202020;
+      --fg-soft: #60636b;
+      --accent: #e53935;
+      --accent-soft: #ffe3e2;
+      --border: #e0e0ea;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.12);
+      --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono: "Fira Code", "Consolas", monospace;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: var(--sans);
+      color: var(--fg);
+      background: radial-gradient(circle at top left, #fef3f2 0, #f4f4f7 40%, #eef2ff 100%);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* LAYOUT GERAL */
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 18px 18px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer; /* (para o Alt+Clique) */
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: radial-gradient(circle at 30% 20%, #ffffff 0, #ff8a80 28%, #d32f2f 100%);
+      display: grid;
+      place-items: center;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 16px;
+      box-shadow: 0 8px 22px rgba(211, 47, 47, 0.4);
+    }
+
+    .brand-text-main {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-name {
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+
+    .brand-tagline {
+      font-size: 12px;
+      color: var(--fg-soft);
+    }
+
+    nav {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+.testimonial-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: default;
+}
+
+.testimonial-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: default; /* parece normal */
+}
+    /* --------- MODAL DE CANDIDATURA --------- */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 40;
+      padding: 16px;
+    }
+
+    .modal-backdrop.visible {
+      display: flex;
+    }
+
+    .modal-panel {
+      width: 100%;
+      max-width: 520px;
+      background: #020617;
+      color: #e5e7eb;
+      border-radius: 18px;
+      padding: 18px 18px 16px;
+      box-shadow: 0 22px 60px rgba(15, 23, 42, 0.8);
+      border: 1px solid #4b5563;
+      font-family: var(--sans);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .modal-meta {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .modal-close {
+      border: none;
+      background: transparent;
+      color: #9ca3af;
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+      padding: 2px 4px;
+    }
+
+    .modal-close:hover {
+      color: #e5e7eb;
+    }
+
+    .modal-form {
+      display: grid;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .modal-field label {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 3px;
+      color: #9ca3af;
+      font-family: var(--mono);
+    }
+
+    .modal-field input,
+    .modal-field textarea {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      color: #e5e7eb;
+      padding: 8px 9px;
+      font-size: 13px;
+      font-family: var(--mono);
+      resize: vertical;
+      min-height: 38px;
+    }
+
+    .modal-field textarea {
+      min-height: 80px;
+    }
+
+    .modal-field input:focus-visible,
+    .modal-field textarea:focus-visible {
+      outline: none;
+      border-color: #f97373;
+      box-shadow: 0 0 0 1px rgba(248, 113, 113, 0.6);
+    }
+
+    .modal-actions {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .modal-msg {
+      font-size: 11px;
+      font-family: var(--mono);
+      min-height: 16px;
+    }
+
+    .modal-msg-ok { color: #4ade80; }
+    .modal-msg-err { color: #fb7185; }
+    nav a {
+      font-size: 13px;
+      color: var(--fg-soft);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: 0.15s ease;
+    }
+
+    nav a:hover,
+    nav a:focus-visible {
+      color: var(--fg);
+      border-color: var(--border);
+      background: rgba(255, 255, 255, 0.9);
+      outline: none;
+    }
+
+    .nav-cta {
+      background: #111827;
+      color: #f9fafb;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.28);
+      border: 1px solid #020617;
+    }
+
+    .nav-cta:hover {
+      filter: brightness(1.02);
+      transform: translateY(-1px);
+    }
+
+    /* HERO */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.3fr);
+      gap: 26px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-main {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    .hero-pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34,197,94,0.25);
+    }
+
+    .hero-title {
+      font-size: clamp(28px, 3.5vw, 36px);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: #111827;
+    }
+
+    .hero-highlight {
+      color: var(--accent);
+    }
+
+    .hero-text {
+      font-size: 15px;
+      color: var(--fg-soft);
+      max-width: 34rem;
+      line-height: 1.7;
+    }
+
+    .hero-text strong {
+      color: #111827;
+      font-weight: 600;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #e53935, #b71c1c);
+      color: #ffffff;
+      box-shadow: 0 14px 30px rgba(185, 28, 28, 0.45);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: #111827;
+      border: 1px solid #d1d5db;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.85);
+    }
+
+    .hero-footnote {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+
+    /* HERO IMAGEM MOCK */
+
+    .hero-visual {
+      position: relative;
+      padding: 18px;
+    }
+
+    .hero-card {
+      background: var(--bg-soft);
+      border-radius: 24px;
+      padding: 18px 18px 20px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    .hero-video-mock {
+      border-radius: 18px;
+      background: radial-gradient(circle at 15% 10%, #eef2ff 0, #1f2937 28%, #020617 100%);
+      height: 170px;
+      margin-bottom: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-video-mock::before {
+      content: "Cenas internas ilustrativas";
+      position: absolute;
+      bottom: 10px;
+      right: 14px;
+      font-size: 11px;
+      color: rgba(248, 250, 252, 0.7);
+    }
+
+    .hero-video-mock::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(248,250,252,0.2) 0, transparent 50%);
+      mix-blend-mode: screen;
+    }
+
+    .hero-video-strip {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .hero-thumb {
+      flex: 1;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #f97373, #ef4444, #111827);
+      height: 54px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-thumb:nth-child(2) {
+      background: linear-gradient(135deg, #38bdf8, #0f172a);
+    }
+
+    .hero-thumb:nth-child(3) {
+      background: linear-gradient(135deg, #a855f7, #0b1120);
+    }
+
+    .hero-thumb::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.4;
+      background-image:
+        linear-gradient(120deg, rgba(248,250,252,0.5) 0, transparent 40%),
+        linear-gradient(0deg, rgba(15,23,42,0.3) 0, transparent 40%, rgba(15,23,42,0.4) 100%);
+    }
+
+    .hero-card-footer {
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    .hero-card-footer span strong {
+      color: #111827;
+    }
+
+    .hero-chip {
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: #111827;
+      color: #f9fafb;
+      font-size: 11px;
+    }
+
+    /* SEÇÃO ÁREAS */
+
+    .section {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 22px;
+      padding: 20px 20px 18px;
+      border: 1px solid rgba(209, 213, 219, 0.8);
+      box-shadow: 0 16px 36px rgba(148, 163, 184, 0.16);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: #111827;
+    }
+
+    .section-sub {
+      font-size: 13px;
+      color: var(--fg-soft);
+      max-width: 32rem;
+      line-height: 1.6;
+    }
+
+    .pill-soft {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+
+    .areas-grid {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .areas-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .areas-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .area-card {
+      border-radius: 16px;
+      padding: 12px 12px 13px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+    }
+
+    .area-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .area-tag {
+      font-size: 11px;
+      color: #6b7280;
+      margin-bottom: 6px;
+      font-family: var(--mono);
+    }
+
+    .area-desc {
+      font-size: 13px;
+      color: var(--fg-soft);
+      line-height: 1.5;
+    }
+
+    /* BENEFÍCIOS / DEPOIMENTOS */
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.2fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 880px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .benefits-list {
+      list-style: none;
+      display: grid;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--fg-soft);
+    }
+
+    .benefits-list li::before {
+      content: "• ";
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .testimonial {
+      border-radius: 18px;
+      padding: 14px 14px 12px;
+      background: linear-gradient(135deg, #0f172a, #111827);
+      color: #e5e7eb;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonial::before {
+      content: "“";
+      position: absolute;
+      font-size: 70px;
+      top: -18px;
+      left: 12px;
+      color: rgba(148, 163, 184, 0.25);
+      font-family: "Georgia", serif;
+    }
+
+    .testimonial p {
+      font-size: 13px;
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+
+    .testimonial-footer {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .testimonial-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 10%, #fef3c7 0, #fb7185 45%, #1f2937 100%);
+    }
+
+    /* CALL TO ACTION FINAL */
+
+    .cta {
+      margin-top: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--fg-soft);
+    }
+
+    .cta strong {
+      color: #111827;
+    }
+
+    /* FOOTER */
+
+    footer {
+      padding: 10px 18px 18px;
+      margin-top: auto;
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 8px;
+    }
+
+    .footer-links a {
+      margin-left: 12px;
+      color: #9ca3af;
+    }
+
+    .footer-links a:hover {
+      color: #4b5563;
+      text-decoration: underline;
+    }
+
+    /* NÓ ESCONDIDO VISUALMENTE DISCRETO */
+    .hidden-node {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: #d1d5db;
+      opacity: 0.4;
+      cursor: default;
+      user-select: none;
+    }
+
+    .hidden-node:hover {
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- HEADER -->
+    <header>
+      <!-- Alt+Clique no brand leva para ilu.html -->
+      <div class="brand" id="brand-access">
+        <div class="brand-mark">IL</div>
+        <div class="brand-text-main">
+          <span class="brand-name">Illusion</span>
+          <span class="brand-tagline">Carreiras em pesquisa & segurança</span>
+        </div>
+      </div>
+
+      <nav>
+        <a href="#sobre">Sobre a Illusion</a>
+        <a href="#areas">Áreas de atuação</a>
+        <a href="#beneficios">Benefícios</a>
+        <a href="#contato">Como se candidatar</a>
+<button type="button" class="nav-cta" id="open-apply-nav">
+  Enviar currículo
+</button>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="sobre">
+      <div class="hero-main">
+        <div class="hero-pill">
+          <span class="hero-pill-dot"></span>
+          Vagas abertas para múltiplas áreas
+        </div>
+        <h1 class="hero-title">
+          Uma carreira <span class="hero-highlight">desafiadora</span> em um mundo em constante mudança.
+        </h1>
+        <p class="hero-text">
+          Na Illusion, você trabalha lado a lado com equipes multidisciplinares em um ambiente de
+          <strong>alta tecnologia</strong>, investigando fenômenos complexos e apoiando operações estratégicas
+          que contribuem para a <strong>segurança e estabilidade global</strong>.
+        </p>
+        <p class="hero-text">
+          Procuramos pessoas curiosas, responsáveis e dispostas a aprender — de cientistas e engenheiros a
+          analistas, profissionais de segurança, comunicação e suporte.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#areas" class="btn btn-primary">Explorar oportunidades</a>
+          <a href="https://miduin.notion.site/afb0b3bed4254f6895db1a64e4f00789?v=618c8310038745dab960285a32db41ec&pvs=74" class="btn btn-ghost" target="_blank" rel="noopener">
+            Ver painel de informações
+          </a>
+        </div>
+        <p class="hero-footnote">
+          As imagens e descrições são ilustrativas para fins de recrutamento.
+        </p>
+      </div>
+
+      <!-- Painel visual "comercial" fake -->
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="hero-tag">Cenas do dia a dia Illusion</div>
+          <div class="hero-video-mock"></div>
+          <div class="hero-video-strip">
+            <div class="hero-thumb"></div>
+            <div class="hero-thumb"></div>
+            <div class="hero-thumb"></div>
+          </div>
+          <div class="hero-card-footer">
+            <span>
+              Profissionais em <strong>laboratórios avançados</strong>, operações de campo e análise de dados.
+            </span>
+            <span class="hero-chip">Equipe em ação</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ÁREAS DE ATUAÇÃO -->
+    <section class="section" id="areas">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Áreas de atuação</h2>
+          <p class="section-sub">
+            A Illusion reúne profissionais de diferentes formações para lidar com desafios complexos.
+            Essas são algumas das frentes em que você pode atuar.
+          </p>
+        </div>
+        <span class="pill-soft">Oportunidades em pesquisa, campo e suporte</span>
+      </div>
+
+      <div class="areas-grid">
+        <article class="area-card">
+          <div class="area-title">Pesquisa & Laboratórios</div>
+          <div class="area-tag">Cientistas, analistas de dados, bioengenharia</div>
+          <p class="area-desc">
+            Atue em ambientes controlados, investigando fenômenos pouco compreendidos, validando hipóteses
+            e apoiando a criação de novos protocolos e tecnologias.
+          </p>
+        </article>
+
+        <article class="area-card">
+          <div class="area-title">Operações de Campo</div>
+          <div class="area-tag">Equipes táticas, especialistas em segurança</div>
+          <p class="area-desc">
+            Trabalhe em equipes coordenadas, acompanhando operações, dando suporte logístico
+            e garantindo que procedimentos sejam executados com precisão.
+          </p>
+        </article>
+
+        <article class="area-card">
+          <div class="area-title">Engenharia & Tecnologia</div>
+          <div class="area-tag">Infraestrutura, automação, equipamentos</div>
+          <p class="area-desc">
+            Desenvolvimento e manutenção de sistemas, drones, redes seguras e soluções técnicas que
+            sustentam as atividades de campo e de laboratório.
+          </p>
+        </article>
+
+        <article class="area-card">
+          <div class="area-title">Comunicação & Informação</div>
+          <div class="area-tag">Análise, relações institucionais</div>
+          <p class="area-desc">
+            Gestão de fluxos de informação, produção de relatórios estratégicos e
+            interlocução discreta com instituições parceiras.
+          </p>
+        </article>
+
+        <article class="area-card">
+          <div class="area-title">Gestão & Suporte</div>
+          <div class="area-tag">Administração, jurídico, RH</div>
+          <p class="area-desc">
+            Coordene equipes, organize recursos, cuide de contratos, documentação e das
+            pessoas que fazem a Illusion funcionar todos os dias.
+          </p>
+        </article>
+
+        <article class="area-card">
+          <div class="area-title">Estágios & Trainees</div>
+          <div class="area-tag">Formação de novos talentos</div>
+          <p class="area-desc">
+            Programas de desenvolvimento para estudantes e recém-formados que desejam aprender
+            diretamente com especialistas, em projetos reais.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- BENEFÍCIOS / DEPOIMENTO -->
+    <section class="section" id="beneficios">
+      <div class="two-col">
+        <div>
+          <h2 class="section-title">Benefícios e ambiente de trabalho</h2>
+          <p class="section-sub" style="margin-top:4px;margin-bottom:10px;">
+            A Illusion oferece condições pensadas para que você possa se concentrar em
+            desafios importantes, com suporte e estrutura.
+          </p>
+          <ul class="benefits-list">
+            <li>Pacote de benefícios competitivo e alinhado ao mercado.</li>
+            <li>Treinamento especializado e reciclagem contínua.</li>
+            <li>Ambientes laboratoriais e centros operacionais de alto padrão.</li>
+            <li>Planos de desenvolvimento individual e trilhas de carreira.</li>
+            <li>Equipe diversa, colaborativa e focada em resultados.</li>
+            <li>Participação em projetos com impacto direto na segurança de milhares de pessoas.</li>
+            <li>Itens e Armaduras de tecnologia de ponta.</li>
+          </ul>
+        </div>
+
+        <aside class="testimonial">
+          <p>
+            “Quando entrei na Illusion, buscava apenas um trabalho estável. Hoje, sinto que faço parte
+            de algo maior: uma equipe que leva a sério o compromisso de proteger e cuidar, mesmo que
+            nem todo mundo saiba exatamente como fazemos isso.”
+          </p>
+          <div class="testimonial-user" id="secret-user">
+  <img src="helena.png" alt="Usuário" class="testimonial-avatar"/>
+  <div>
+    <strong>Helena R., Analista de Operações</strong><br>
+    <span class="time">Há 4 anos na Illusion</span>
+  </div>
+</div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- COMO SE CANDIDATAR -->
+    <section class="section" id="contato">
+      <div class="cta">
+        <div>
+          <div class="section-title" style="margin-bottom:4px;">Pronto para o próximo passo?</div>
+          <p>
+            Envie seu currículo e, se possível, um breve resumo das suas experiências e área de interesse.
+            Nossa equipe de recrutamento fará uma análise e poderá convidá-lo para as próximas etapas.
+          </p>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button type="button" class="btn btn-primary" id="open-apply">
+  Enviar currículo agora
+</button>
+
+          <a href="https://miduin.notion.site/afb0b3bed4254f6895db1a64e4f00789?v=618c8310038745dab960285a32db41ec&pvs=74" target="_blank" rel="noopener" class="btn btn-ghost">
+            Ver mais detalhes da organização
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- MODAL DE CANDIDATURA -->
+  <div class="modal-backdrop" id="apply-modal">
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h2 class="modal-title">Candidatura para a Illusion</h2>
+        <button class="modal-close" id="close-apply" aria-label="Fechar">×</button>
+      </div>
+      <p class="modal-meta">
+        [META] Usuário do Discord: use seu @ ou ID para identificação fora do personagem.<br>
+        <span style="color:#f97373;">-# Aviso:</span> responda os campos abaixo como se fosse o seu personagem.
+      </p>
+
+      <form id="apply-form" class="modal-form">
+        <div class="modal-field">
+          <label for="discord">[META] Usuário do Discord</label>
+          <input id="discord" name="discord" placeholder="ex: @seuuser ou ID numérico" required />
+        </div>
+
+        <div class="modal-field">
+          <label for="nome">Nome</label>
+          <input id="nome" name="nome" placeholder="Nome do personagem" required />
+        </div>
+
+        <div class="modal-field">
+          <label for="idade">Idade</label>
+          <input id="idade" name="idade" placeholder="Idade aparente / oficial" required />
+        </div>
+
+        <div class="modal-field">
+          <label for="lado">Inclinação (Lado)</label>
+          <input id="lado" name="lado" placeholder="Herói, vilão, neutro, agente independente..." required />
+        </div>
+
+        <div class="modal-field">
+          <label for="curriculo">Currículo (Descreva sobre você)</label>
+          <textarea id="curriculo" name="curriculo"
+            placeholder="Histórico, habilidades, experiências relevantes, envolvimento com anomalias, etc."
+            required></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary">Enviar candidatura</button>
+          <span id="apply-feedback" class="modal-msg"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        © <span id="year"></span> Illusion. Todos os direitos reservados.
+        <span class="hidden-node">| Nó 01</span>
+      </div>
+      <div class="footer-links">
+        <a href="#sobre">Sobre</a>
+        <a href="#areas">Áreas</a>
+        <a href="#beneficios">Benefícios</a>
+        <a href="#contato">Candidatura</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Ano automático no footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Avatar do depoimento leva para o painel interno
+    document.querySelector(".testimonial-avatar").addEventListener("click", () => {
+      window.location.href = "ilu.html";
+    });
+
+    // ---------- MODAL DE CANDIDATURA ----------
+    const openApply   = document.getElementById('open-apply');
+    const applyModal  = document.getElementById('apply-modal');
+    const closeApply  = document.getElementById('close-apply');
+    const applyForm   = document.getElementById('apply-form');
+    const applyMsg    = document.getElementById('apply-feedback');
+    const openApplyNav = document.getElementById('open-apply-nav');
+
+
+    const WEBHOOK_URL =
+      "https://ptb.discord.com/api/webhooks/1445617873707077674/JmVCQK--8JP9hcUyYTNIs0mnW4_aNaHywD1AcwUSCqa-Gf6DfldM37NH_D7BlIjJHK2W";
+
+    function openModal() {
+      applyModal.classList.add('visible');
+      applyMsg.textContent = '';
+      applyMsg.className = 'modal-msg';
+    }
+
+    function closeModal() {
+      applyModal.classList.remove('visible');
+    }
+
+openApply.addEventListener('click', openModal);
+if (openApplyNav) openApplyNav.addEventListener('click', openModal);
+closeApply.addEventListener('click', closeModal);
+
+
+    // fechar clicando fora do painel
+    applyModal.addEventListener('click', (e) => {
+      if (e.target === applyModal) closeModal();
+    });
+
+    // enviar candidatura para o webhook
+    applyForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const discord  = applyForm.discord.value.trim();
+      const nome     = applyForm.nome.value.trim();
+      const idade    = applyForm.idade.value.trim();
+      const lado     = applyForm.lado.value.trim();
+      const curriculo = applyForm.curriculo.value.trim();
+
+      if (!discord || !nome || !idade || !lado || !curriculo) {
+        applyMsg.textContent = 'Preencha todos os campos.';
+        applyMsg.className = 'modal-msg modal-msg-err';
+        return;
+      }
+
+      const timestamp = new Date().toLocaleString('pt-BR');
+
+      const content =
+`▋ **\`✕ ⁝ ILLUSION · NOVA CANDIDATURA\`**
+┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+
+[META] **Usuário do Discord:** ${discord}
+
+> **Nome:** ${nome}
+> **Idade:** ${idade}
+> **Inclinação (Lado):** ${lado}
+> **Carimbo de tempo:** ${timestamp}
+
+**Currículo (descrição do personagem):**
+\`\`\`
+${curriculo}
+\`\`\`
+
+彡 **Candidatura encaminhada para V.I.S. / R.E.C.**
+*Análise de perfil e verificação de histórico podem ser iniciadas a qualquer momento.*`;
+
+      try {
+        const resp = await fetch(WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ content })
+        });
+
+        if (!resp.ok) throw new Error("HTTP " + resp.status);
+
+        applyMsg.textContent = 'Candidatura enviada com sucesso para o núcleo de recrutamento.';
+        applyMsg.className = 'modal-msg modal-msg-ok';
+        applyForm.reset();
+      } catch (err) {
+        console.error(err);
+        applyMsg.textContent = 'Falha ao enviar. Tente novamente em alguns instantes.';
+        applyMsg.className = 'modal-msg modal-msg-err';
+      }
+    });
+  </script>
+
+</body>
+</html>

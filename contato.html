@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Illusion • Contato & Recrutamento</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Mesmo favicon -->
+  <link rel="icon" type="image/png" href="https://media.tenor.com/o0mvoouLlywAAAAe/pfp.png" />
+
+  <style>
+    /* --------- RESET / BASE --------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #020202;
+      --bg-soft: #050505;
+      --fg: #f5f5f5;
+      --fg-soft: #c7c7c7;
+      --accent: #e53935;
+      --border: #2a2a2a;
+      --mono: "Consolas", "Fira Code", "SF Mono", Menlo, Monaco, monospace;
+      --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      background: radial-gradient(circle at top, #181818 0, #020202 55%);
+      color: var(--fg);
+      font-family: var(--sans);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      overflow-x: hidden;
+    }
+
+    /* --------- VHS OVERLAY --------- */
+    .vhs-overlay::before,
+    .vhs-overlay::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .vhs-overlay::before {
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.03) 0,
+        rgba(255, 255, 255, 0.03) 1px,
+        transparent 2px,
+        transparent 3px
+      );
+      mix-blend-mode: screen;
+      opacity: 0.25;
+    }
+
+    @keyframes vhs-noise {
+      0%   { opacity: 0.08; transform: translate3d(0,0,0); }
+      20%  { opacity: 0.12; transform: translate3d(-1px, 1px, 0); }
+      40%  { opacity: 0.06; transform: translate3d(1px,-1px, 0); }
+      60%  { opacity: 0.10; transform: translate3d(0,0,0); }
+      80%  { opacity: 0.05; transform: translate3d(-0.5px,0.5px,0); }
+      100% { opacity: 0.09; transform: translate3d(0,0,0); }
+    }
+
+    .vhs-overlay::after {
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          rgba(0,0,0,0.3) 0,
+          rgba(0,0,0,0.3) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+      animation: vhs-noise 0.4s infinite;
+      mix-blend-mode: soft-light;
+    }
+
+    /* --------- FRAME / HEADER --------- */
+    .frame {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 16px 18px 48px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .eye-video {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #f5f5f5;
+      box-shadow: 0 0 8px rgba(255,255,255,0.12);
+    }
+
+    .eye-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .brand-text { line-height: 1.2; }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--fg-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    nav a {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--fg-soft);
+      text-decoration: none;
+      transition: 0.15s ease;
+      font-family: var(--mono);
+    }
+
+    nav a:hover,
+    nav a:focus-visible {
+      border-color: var(--fg);
+      color: var(--fg);
+      background: #101010;
+      outline: none;
+    }
+
+    /* --------- HERO --------- */
+    .hero {
+      margin-top: 14px;
+      margin-bottom: 24px;
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+    }
+
+    .hero-main {
+      padding: 18px 18px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at top, #151515 0, #050505 60%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-main::before {
+      content: "ILLUSION // CONTACT CHANNELS";
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.18);
+    }
+
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .hero-title {
+      font-size: clamp(22px, 2.8vw, 30px);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 8px;
+    }
+
+    .hero-subtitle {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--fg-soft);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .hero-body {
+      font-size: 13px;
+      color: var(--fg-soft);
+      max-width: 46rem;
+    }
+
+    .hero-body b { color: var(--fg); }
+
+    .hero-side {
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #050505;
+      padding: 14px 14px 12px;
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+
+    .hero-side-title {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 8px;
+      color: var(--fg);
+    }
+
+    .hero-side p {
+      color: var(--fg-soft);
+      line-height: 1.6;
+    }
+
+    .hero-side-list {
+      margin-top: 8px;
+      display: grid;
+      gap: 4px;
+    }
+
+    .hero-side-list span {
+      display: block;
+      opacity: 0.9;
+    }
+
+    /* --------- GRID / CARDS --------- */
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.4fr);
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    @media (max-width: 1000px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #050505;
+      padding: 14px 16px 14px;
+      font-size: 12px;
+    }
+
+    .card-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 6px;
+      color: var(--fg);
+    }
+
+    .card-sub {
+      font-size: 11px;
+      color: var(--fg-soft);
+      margin-bottom: 8px;
+    }
+
+    .card-list {
+      list-style: none;
+      font-size: 11px;
+      color: var(--fg-soft);
+      display: grid;
+      gap: 4px;
+    }
+
+    .card-list li::before {
+      content: "▢ ";
+      color: var(--fg-soft);
+    }
+
+    .badge-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #0a0a0a;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* --------- FORM CONTATO --------- */
+    .form-grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .form-field label {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--fg-soft);
+      font-family: var(--mono);
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+      background: #0f0f0f;
+      border: 1px solid var(--border);
+      color: var(--fg);
+      padding: 9px 10px;
+      border-radius: 8px;
+      font-family: var(--mono);
+      font-size: 12px;
+      resize: vertical;
+      min-height: 40px;
+    }
+
+    .form-field textarea {
+      min-height: 80px;
+    }
+
+    .form-field input:focus-visible,
+    .form-field textarea:focus-visible,
+    .form-field select:focus-visible {
+      border-color: var(--accent);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(229, 57, 53, 0.2);
+    }
+
+    .actions {
+      margin-top: 8px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 9px 15px;
+      border: 1px solid var(--fg);
+      background: transparent;
+      color: var(--fg);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-family: var(--mono);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.15s ease;
+    }
+
+    .btn-primary { background: var(--fg); color: #000; }
+    .btn-primary:hover { filter: brightness(0.9); transform: translateY(-1px); }
+
+    .msg {
+      font-family: var(--mono);
+      font-size: 11px;
+      min-height: 16px;
+    }
+
+    .msg-ok { color: #81c784; }
+    .msg-err { color: #ff8c8a; }
+
+    /* --------- TABELA DE ROTAS --------- */
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--mono);
+      font-size: 11px;
+      margin-top: 8px;
+    }
+
+    .table th,
+    .table td {
+      padding: 7px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+
+    .table th {
+      color: var(--fg-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: #050505;
+    }
+
+    .table td {
+      color: var(--fg);
+      background: #060606;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .pill-red { border-color: var(--accent); color: #ffb3b1; }
+    .pill-yellow { border-color: #ffc107; color: #ffe9a6; }
+    .pill-green { border-color: #4caf50; color: #c8f5cd; }
+
+    /* --------- FOOTER --------- */
+    footer {
+      margin-top: 22px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--fg-soft);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 8px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .timecode { letter-spacing: 0.18em; }
+
+    .badge {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+  </style>
+</head>
+<body class="vhs-overlay">
+  <div class="frame">
+    <!-- HEADER -->
+    <header>
+      <div class="brand">
+        <div class="eye-video">
+          <video src="https://media.tenor.com/o0mvoouLlywAAAPo/pfp.mp4" autoplay loop muted playsinline></video>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">Illusion</div>
+          <div class="brand-sub">Contato • Recrutamento & Canais Seguros</div>
+        </div>
+      </div>
+
+      <nav>
+        <a href="ilu.html">Portal</a>
+        <a href="arquivos.html">Arquivos</a>
+        <a href="operacoes.html">Informações</a>
+        <a href="laboratorios.html">Sítios</a>
+        <a href="contato.html">Contato</a>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <article class="hero-main">
+        <div class="hero-label">Canal externo monitorado</div>
+        <h1 class="hero-title">Contato Illusion</h1>
+        <p class="hero-subtitle">Comunicações filtradas pelo V.I.S. e pela LINK.</p>
+        <p class="hero-body">
+          A Illusion não oferece atendimento público. Toda mensagem enviada por este
+          painel é encaminhada para triagem automática, cruzada com registros da
+          <b>L.I.N.K.</b>, da <b>R.E.C.</b> e do <b>V.I.S.</b>. Somente comunicações
+          relacionadas a anomalias, cooperação institucional ou recrutamento são
+          processadas. Tentativas de rastrear a origem destes canais resultam em
+          isolamento imediato.
+        </p>
+      </article>
+
+      <aside class="hero-side">
+        <div class="hero-side-title">Diretrizes rápidas</div>
+        <p>
+          Use este painel para:
+        </p>
+        <div class="hero-side-list">
+          <span>• Reportar atividade anômala fora de protocolo.</span>
+          <span>• Solicitar cooperação com agências oficiais.</span>
+          <span>• Enviar candidatura para atuação na Illusion.</span>
+          <span>• Requisitar contato discreto com células da REC/SHADE.</span>
+        </div>
+        <p style="margin-top:10px;">
+          Mensagens não relacionadas podem ser descartadas sem aviso.
+        </p>
+      </aside>
+    </section>
+
+    <!-- GRID PRINCIPAL -->
+    <section class="grid">
+      <!-- CANAIS + RECRUTAMENTO -->
+      <article class="card">
+        <span class="badge-inline">Canais criptografados · Uso restrito</span>
+        <h2 class="card-title" style="margin-top:8px;">Canais oficiais</h2>
+        <p class="card-sub">
+          Rotas usadas para contato indireto com a Illusion. Os endereços são meramente
+          indicativos para fins de RP; a organização pode alterá-los sem aviso.
+        </p>
+        <ul class="card-list">
+          <li><b>Q-Link Seguro:</b> qlink://illusion.red/contato · Rota preferencial para parceiros recorrentes.</li>
+          <li><b>Rádio criptografado:</b> 133.7 MHz · Janela de escuta em horários variáveis.</li>
+          <li><b>Ponto físico:</b> Átrio Beta, andar -02, Sítio-01 · Acesso apenas com escolta.</li>
+          <li><b>Canal de crise:</b> chave de emergência fornecida pela R.E.C. ou por autoridades locais.</li>
+        </ul>
+
+        <h2 class="card-title" style="margin-top:16px;">Recrutamento</h2>
+        <p class="card-sub">
+          A Illusion aceita candidatos de múltiplas origens — heróis licenciados,
+          vilões em regime de cooperação, civis especializados e técnicos de bastidor.
+        </p>
+        <ul class="card-list">
+          <li>Vagas para analistas meméticos, engenheiros de contenção, médicos de trauma e operadores de campo.</li>
+          <li>Histórico prévio em agências, forças armadas ou grupos independentes pode acelerar o processo.</li>
+          <li>Parte do processo de triagem é conduzido pelo V.I.S. e pelo T.R.A.P., com entrevistas no Sítio-01.</li>
+        </ul>
+      </article>
+
+      <!-- FORM DE CONTATO -->
+      <article class="card">
+        <h2 class="card-title">Enviar transmissão</h2>
+        <p class="card-sub">
+          Mensagens são encapsuladas, assinadas e encaminhadas para o setor responsável
+          conforme o tipo de assunto selecionado.
+        </p>
+
+        <form id="contact-form" class="form-grid">
+          <div class="form-field">
+            <label for="codename">Codinome</label>
+            <input id="codename" name="codename" placeholder="ex: prism, ward, civ-071" required />
+          </div>
+          <div class="form-field">
+            <label for="channel">Tipo de assunto</label>
+            <select id="channel" name="channel" required>
+              <option value="">Selecione…</option>
+              <option value="anomalia">Relato de anomalia</option>
+              <option value="cooperacao">Cooperação institucional</option>
+              <option value="recrutamento">Recrutamento</option>
+              <option value="outro">Outro (interno)</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="message">Conteúdo da transmissão</label>
+            <textarea id="message" name="message" placeholder="Resuma a situação, localização aproximada e risco estimado." required></textarea>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn btn-primary">Transmitir pacote</button>
+            <span id="feedback" class="msg"></span>
+          </div>
+        </form>
+      </article>
+    </section>
+
+    <!-- TABELA DE ROTAS / DIVISÕES -->
+    <section class="card">
+      <h2 class="card-title">Roteamento interno de mensagens</h2>
+      <p class="card-sub">
+        De acordo com o tipo de assunto, a mensagem é redirecionada para uma ou mais
+        divisões dentro da Illusion.
+      </p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Tipo de assunto</th>
+            <th>Divisões principais</th>
+            <th>Uso típico</th>
+            <th>Prioridade</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Relato de anomalia</td>
+            <td>R.E.C., V.A.N.G., H.A.L.O.</td>
+            <td>Detecção de entidades ou eventos fora do normal.</td>
+            <td><span class="pill pill-red">Nível Vermelho</span></td>
+          </tr>
+          <tr>
+            <td>Cooperação institucional</td>
+            <td>L.I.N.K., V.I.S., S.E.A.</td>
+            <td>Acordos com agências, governo, empresas e parceiros.</td>
+            <td><span class="pill pill-yellow">Nível Âmbar</span></td>
+          </tr>
+          <tr>
+            <td>Recrutamento</td>
+            <td>V.I.S., R.E.C., A.R.C.</td>
+            <td>Entrada de novos agentes, pesquisadores e suporte técnico.</td>
+            <td><span class="pill pill-green">Nível Verde</span></td>
+          </tr>
+          <tr>
+            <td>Outro (interno)</td>
+            <td>Direcionamento automático</td>
+            <td>Demandas administrativas, logísticas ou de rotina.</td>
+            <td><span class="pill">Normal</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="timecode">▶ 00:47:13 • Illusion Tape // Contact Node</div>
+      <div class="badge">Illusion • Comunicações monitoradas</div>
+    </footer>
+  </div>
+
+<script>
+const contactForm = document.getElementById('contact-form');
+const feedback = document.getElementById('feedback');
+
+const WEBHOOK_URL =
+  "https://ptb.discord.com/api/webhooks/1445617873707077674/JmVCQK--8JP9hcUyYTNIs0mnW4_aNaHywD1AcwUSCqa-Gf6DfldM37NH_D7BlIjJHK2W";
+
+contactForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const codename = contactForm.codename.value.trim();
+  const channel = contactForm.channel.value;
+  const message = contactForm.message.value.trim();
+
+  if (!codename || !channel || !message) {
+    feedback.textContent = 'Preencha todos os campos.';
+    feedback.className = 'msg msg-err';
+    return;
+  }
+
+  const assuntoMap = {
+    anomalia: "Relato de anomalia",
+    cooperacao: "Cooperação institucional",
+    recrutamento: "Recrutamento",
+    outro: "Outro (interno)",
+  };
+
+  const timestamp = new Date().toLocaleString("pt-BR");
+
+  const content =
+` \`\`\`
+@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@%*=%%**@@@@
+@@@@@@@@@%@@@@-::-:::-*%@
+@@@%@@%*--+@@@::::::::-%@
+@@@#%*::::::@@::::::::-#@
+@@@%@%:::::#@@::::::-+#@@
+@@@@@@@@@@@@@@@:::#@@=*@@
+@@@@%@@@@@@@@@@:::::::+%@
+@@@@##@@@@@@@@@+:::::+@@@
+@@@@@#%@@@@@%*:::::::+%@@
+@@@@@%#%@@@@@%*::::::#@@@
+@@@@@@@@%@%#*+*++--+%@@@@
+@@@@@@@@@@@@@@@@@%@@@@@@@
+\`\`\`
+
+▋ **\`✕ ⁝ ILLUSION · TRANSMISSÃO RECEBIDA\`**
+┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+
+> **Codinome:** \`${codename}\`
+> **Canal:** \`${assuntoMap[channel]}\`
+> **Carimbo de tempo:** \`${timestamp}\`
+
+**Conteúdo da transmissão:**
+\`\`\`
+${message}
+\`\`\`
+
+彡 **Canal monitorado por V.I.S. / R.E.C.**
+*Rastreamento ativo. Anomalias fora de padrão serão isoladas imediatamente.*
+`;
+
+  try {
+    const resp = await fetch(WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content }),
+    });
+
+    if (!resp.ok) throw new Error("HTTP " + resp.status);
+
+    feedback.textContent =
+      "Transmissão encapsulada e encaminhada aos setores responsáveis.";
+    feedback.className = "msg msg-ok";
+    contactForm.reset();
+  } catch (err) {
+    console.error(err);
+    feedback.textContent = "Falha ao transmitir. Tente novamente.";
+    feedback.className = "msg msg-err";
+  }
+});
+
+</script>
+
+</body>
+</html>
