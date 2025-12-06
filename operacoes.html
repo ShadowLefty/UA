@@ -6,323 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Mesmo favicon -->
-  <link rel="icon" type="image/png" href="https://media.tenor.com/o0mvoouLlywAAAAe/pfp.png" />
-
-  <style>
-    /* --------- RESET / BASE IGUAL A ilu.html --------- */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    :root {
-      --bg: #020202;
-      --bg-soft: #050505;
-      --fg: #f5f5f5;
-      --fg-soft: #c7c7c7;
-      --accent: #e53935;
-      --border: #2a2a2a;
-      --mono: "Consolas", "Fira Code", "SF Mono", Menlo, Monaco, monospace;
-      --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-
-    html, body { height: 100%; }
-
-    body {
-      background: radial-gradient(circle at top, #181818 0, #020202 55%);
-      color: var(--fg);
-      font-family: var(--sans);
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      overflow-x: hidden;
-    }
-
-    /* --------- VHS OVERLAY --------- */
-    .vhs-overlay::before,
-    .vhs-overlay::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .vhs-overlay::before {
-      background: repeating-linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0.03) 0,
-        rgba(255, 255, 255, 0.03) 1px,
-        transparent 2px,
-        transparent 3px
-      );
-      mix-blend-mode: screen;
-      opacity: 0.25;
-    }
-
-    @keyframes vhs-noise {
-      0% { opacity: 0.08; transform: translate3d(0,0,0); }
-      20% { opacity: 0.12; transform: translate3d(-1px, 1px, 0); }
-      40% { opacity: 0.06; transform: translate3d(1px, -1px, 0); }
-      60% { opacity: 0.1; transform: translate3d(0, 0, 0); }
-      80% { opacity: 0.05; transform: translate3d(-0.5px, 0.5px, 0); }
-      100% { opacity: 0.09; transform: translate3d(0, 0, 0); }
-    }
-
-    .vhs-overlay::after {
-      background-image:
-        repeating-linear-gradient(
-          0deg,
-          rgba(0, 0, 0, 0.3) 0,
-          rgba(0, 0, 0, 0.3) 1px,
-          transparent 1px,
-          transparent 3px
-        );
-      animation: vhs-noise 0.4s infinite;
-      mix-blend-mode: soft-light;
-    }
-
-    /* --------- FRAME / HEADER --------- */
-    .frame {
-      position: relative;
-      z-index: 2;
-      max-width: 1200px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 16px 18px 48px;
-    }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 12px;
-      margin-bottom: 20px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .eye-video {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 2px solid #f5f5f5;
-      box-shadow: 0 0 8px rgba(255, 255, 255, 0.12);
-    }
-
-    .eye-video video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .brand-text { line-height: 1.2; }
-
-    .brand-title {
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
-    .brand-sub {
-      font-size: 11px;
-      color: var(--fg-soft);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-    }
-
-    nav {
-      display: flex;
-      gap: 10px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    nav a {
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      color: var(--fg-soft);
-      text-decoration: none;
-      transition: 0.15s ease;
-      font-family: var(--mono);
-    }
-
-    nav a:hover,
-    nav a:focus-visible {
-      border-color: var(--fg);
-      color: var(--fg);
-      background: #101010;
-      outline: none;
-    }
-
-    /* --------- HERO / INTRO --------- */
-    .hero {
-      margin-top: 18px;
-      margin-bottom: 24px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: radial-gradient(circle at top, #151515 0, #050505 60%);
-      padding: 18px 18px 20px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: "ILLUSION // STRUCTURE OVERVIEW";
-      position: absolute;
-      top: 10px;
-      right: 14px;
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.18);
-    }
-
-    .hero-label {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--accent);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    .hero-title {
-      font-size: clamp(22px, 3vw, 30px);
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      margin-bottom: 10px;
-    }
-
-    .hero-body {
-      font-size: 13px;
-      color: var(--fg-soft);
-      max-width: 48rem;
-      line-height: 1.7;
-    }
-
-    .hero-body b { color: var(--fg); }
-
-    /* --------- GRID / CARDS --------- */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-
-    @media (max-width: 960px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (max-width: 680px) { .grid { grid-template-columns: 1fr; } }
-
-    .section-title {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--fg-soft);
-      margin: 14px 0 8px;
-    }
-
-    .card {
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: #050505;
-      padding: 12px 14px 12px;
-      font-size: 12px;
-    }
-
-    .card-tag {
-      font-family: var(--mono);
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--accent);
-      margin-bottom: 4px;
-    }
-
-    .card-title {
-      font-family: var(--mono);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      margin-bottom: 6px;
-      color: var(--fg);
-    }
-
-    .card-sub {
-      font-size: 11px;
-      color: var(--fg-soft);
-      margin-bottom: 6px;
-    }
-
-    .card-list {
-      list-style: none;
-      font-size: 11px;
-      color: var(--fg-soft);
-      display: grid;
-      gap: 4px;
-    }
-
-    .card-list li::before {
-      content: "▢ ";
-      color: var(--fg-soft);
-    }
-
-    .badge-inline {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--mono);
-      font-size: 10px;
-      padding: 3px 7px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: #0a0a0a;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--fg-soft);
-      margin-top: 4px;
-    }
-
-    /* --------- FOOTER --------- */
-    footer {
-      margin-top: 22px;
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--fg-soft);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 1px solid var(--border);
-      padding-top: 8px;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .timecode { letter-spacing: 0.18em; }
-
-    .badge {
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      padding: 3px 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-    }
-  </style>
+  <link rel="icon" type="image/png"
+        href="https://media.tenor.com/o0mvoouLlywAAAAe/pfp.png" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body class="vhs-overlay">
   <div class="frame">
@@ -330,7 +16,8 @@
     <header>
       <div class="brand">
         <div class="eye-video">
-          <video src="https://media.tenor.com/o0mvoouLlywAAAPo/pfp.mp4" autoplay loop muted playsinline></video>
+          <video src="https://media.tenor.com/o0mvoouLlywAAAPo/pfp.mp4"
+                 autoplay loop muted playsinline></video>
         </div>
         <div class="brand-text">
           <div class="brand-title">Illusion</div>
@@ -348,12 +35,12 @@
     </header>
 
     <!-- HERO EXPLICATIVO -->
-    <section class="hero">
+    <section class="hero hero-operations">
       <div class="hero-label">Canal informativo interno</div>
       <h1 class="hero-title">Mapa das denominações Illusion</h1>
       <p class="hero-body">
         Esta página compila, em um único painel, as principais <b>estruturas</b>,
-        <b>níveis de acesso</b> e <b>divisões operacionais</b> da Illusion.  
+        <b>níveis de acesso</b> e <b>divisões operacionais</b> da Illusion.
         É um material de referência para novos membros e para agentes que
         precisam revisar rapidamente quem faz o quê dentro da organização.
       </p>
@@ -361,7 +48,7 @@
 
     <!-- NÍVEIS DE ACESSO -->
     <h2 class="section-title">Níveis de acesso interno</h2>
-    <section class="grid">
+    <section class="grid-operations">
       <article class="card">
         <div class="card-tag">Classificação interna</div>
         <h3 class="card-title">NA-B · Acesso Básico</h3>
@@ -408,7 +95,7 @@
       </article>
     </section>
 
-    <section class="grid">
+    <section class="grid-operations">
       <article class="card">
         <div class="card-tag">Classificação interna</div>
         <h3 class="card-title">NA-E · Acesso Especial</h3>
@@ -457,7 +144,7 @@
 
     <!-- REDE FINANCEIRA / TECNOLÓGICA -->
     <h2 class="section-title">Rede financeira e tecnológica</h2>
-    <section class="grid">
+    <section class="grid-operations">
       <article class="card">
         <div class="card-tag">Interface com o mundo civil</div>
         <h3 class="card-title">L.I.N.K. · Linking Illusion Network Kinetics</h3>
@@ -505,7 +192,7 @@
       </article>
     </section>
 
-    <section class="grid">
+    <section class="grid-operations">
       <article class="card">
         <div class="card-tag">Engenharia aplicada</div>
         <h3 class="card-title">G.E.A.R. · Gadgets, Engineering, and Research</h3>
@@ -521,14 +208,14 @@
         <span class="badge-inline">Prototipagem e inovação</span>
       </article>
 
-      <!-- espaço propositalmente vazio em telas grandes para respiro visual -->
-      <article class="card" style="opacity:0; pointer-events:none;"></article>
-      <article class="card" style="opacity:0; pointer-events:none;"></article>
+      <!-- Espaço vazio para respiro visual em telas grandes -->
+      <article class="card" style="opacity: 0; pointer-events: none;"></article>
+      <article class="card" style="opacity: 0; pointer-events: none;"></article>
     </section>
 
     <!-- DIVISÕES OPERACIONAIS -->
     <h2 class="section-title">Divisões operacionais</h2>
-    <section class="grid">
+    <section class="grid-operations">
       <article class="card">
         <div class="card-tag">Operações principais</div>
         <h3 class="card-title">R.E.C. · Recon, Enforce, Contain</h3>
@@ -575,7 +262,7 @@
       </article>
     </section>
 
-    <section class="grid">
+    <section class="grid-operations">
       <article class="card">
         <div class="card-tag">Patrulha e vigilância</div>
         <h3 class="card-title">E.S.P. · Expeditionary Secure Patrol</h3>
@@ -622,7 +309,7 @@
       </article>
     </section>
 
-    <section class="grid">
+    <section class="grid-operations">
       <article class="card">
         <div class="card-tag">Alvos e captura</div>
         <h3 class="card-title">T.R.A.P. · Target Retrieval and Apprehension Protocol</h3>
@@ -654,7 +341,7 @@
       </article>
 
       <!-- espaçamento final -->
-      <article class="card" style="opacity:0; pointer-events:none;"></article>
+      <article class="card" style="opacity: 0; pointer-events: none;"></article>
     </section>
 
     <!-- FOOTER -->
