@@ -1063,6 +1063,16 @@ ${curriculo}
 彡 **Candidatura encaminhada para V.I.S. / R.E.C.**
 *Análise de perfil e verificação de histórico podem ser iniciadas a qualquer momento.*`;
 
+          const MAX = 1900; // margem pra não bater nos 2000 do Discord
+      let safeContent = content;
+
+      if (content.length > MAX) {
+        safeContent = content.slice(0, MAX - 40) +
+          '\n[...conteúdo truncado por limite de caracteres do Discord]';
+      }
+      // opcional pra debug:
+      console.log('len original:', content.length, 'len enviado:', safeContent.length);
+        
       try {
         const resp = await fetch(WEBHOOK_URL, {
           method: "POST",
@@ -1085,6 +1095,7 @@ ${curriculo}
 
 </body>
 </html>
+
 
 
 
