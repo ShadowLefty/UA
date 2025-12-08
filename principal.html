@@ -985,116 +985,135 @@
     </div>
   </footer>
 
-  <script>
-    // Ano automático no footer
-    document.getElementById('year').textContent = new Date().getFullYear();
+<script>
+  // Ano automático no footer
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Avatar do depoimento leva para o painel interno
-    document.querySelector(".testimonial-avatar").addEventListener("click", () => {
-      window.location.href = "ilu.html";
-    });
+  // Avatar do depoimento leva para o painel interno
+  document.querySelector(".testimonial-avatar").addEventListener("click", () => {
+    window.location.href = "ilu.html";
+  });
 
-    // ---------- MODAL DE CANDIDATURA ----------
-    const openApply   = document.getElementById('open-apply');
-    const applyModal  = document.getElementById('apply-modal');
-    const closeApply  = document.getElementById('close-apply');
-    const applyForm   = document.getElementById('apply-form');
-    const applyMsg    = document.getElementById('apply-feedback');
-    const openApplyNav = document.getElementById('open-apply-nav');
+  // ---------- MODAL DE CANDIDATURA ----------
+  const openApply    = document.getElementById('open-apply');
+  const applyModal   = document.getElementById('apply-modal');
+  const closeApply   = document.getElementById('close-apply');
+  const applyForm    = document.getElementById('apply-form');
+  const applyMsg     = document.getElementById('apply-feedback');
+  const openApplyNav = document.getElementById('open-apply-nav');
 
+  const WEBHOOK_URL =
+    "https://ptb.discord.com/api/webhooks/1445617873707077674/JmVCQK--8JP9hcUyYTNIs0mnW4_aNaHywD1AcwUSCqa-Gf6DfldM37NH_D7BlIjJHK2W";
 
-    const WEBHOOK_URL =
-      "https://ptb.discord.com/api/webhooks/1445617873707077674/JmVCQK--8JP9hcUyYTNIs0mnW4_aNaHywD1AcwUSCqa-Gf6DfldM37NH_D7BlIjJHK2W";
+  function openModal() {
+    applyModal.classList.add('visible');
+    applyMsg.textContent = '';
+    applyMsg.className = 'modal-msg';
+  }
 
-    function openModal() {
-      applyModal.classList.add('visible');
-      applyMsg.textContent = '';
-      applyMsg.className = 'modal-msg';
+  function closeModal() {
+    applyModal.classList.remove('visible');
+  }
+
+  openApply.addEventListener('click', openModal);
+  if (openApplyNav) openApplyNav.addEventListener('click', openModal);
+  closeApply.addEventListener('click', closeModal);
+
+  // fechar clicando fora do painel
+  applyModal.addEventListener('click', (e) => {
+    if (e.target === applyModal) closeModal();
+  });
+
+  // enviar candidatura para o webhook (AGORA COMO EMBED)
+  applyForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const discord   = applyForm.discord.value.trim();
+    const nome      = applyForm.nome.value.trim();
+    const idade     = applyForm.idade.value.trim();
+    const lado      = applyForm.lado.value.trim();
+    const curriculo = applyForm.curriculo.value.trim();
+
+    if (!discord || !nome || !idade || !lado || !curriculo) {
+      applyMsg.textContent = 'Preencha todos os campos.';
+      applyMsg.className = 'modal-msg modal-msg-err';
+      return;
     }
 
-    function closeModal() {
-      applyModal.classList.remove('visible');
-    }
+    const timestamp = new Date().toLocaleString('pt-BR');
 
-openApply.addEventListener('click', openModal);
-if (openApplyNav) openApplyNav.addEventListener('click', openModal);
-closeApply.addEventListener('click', closeModal);
-
-
-    // fechar clicando fora do painel
-    applyModal.addEventListener('click', (e) => {
-      if (e.target === applyModal) closeModal();
-    });
-
-    // enviar candidatura para o webhook
-    applyForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
-
-      const discord  = applyForm.discord.value.trim();
-      const nome     = applyForm.nome.value.trim();
-      const idade    = applyForm.idade.value.trim();
-      const lado     = applyForm.lado.value.trim();
-      const curriculo = applyForm.curriculo.value.trim();
-
-      if (!discord || !nome || !idade || !lado || !curriculo) {
-        applyMsg.textContent = 'Preencha todos os campos.';
-        applyMsg.className = 'modal-msg modal-msg-err';
-        return;
-      }
-
-      const timestamp = new Date().toLocaleString('pt-BR');
-
-      const content =
-`▋ **\`✕ ⁝ ILLUSION · NOVA CANDIDATURA\`**
-┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
-
-[META] **Usuário do Discord:** ${discord}
+    // Monta o "cabeçalho" da descrição do embed
+    const header =
+`**[META] Usuário do Discord:** ${discord}
 
 > **Nome:** ${nome}
 > **Idade:** ${idade}
 > **Inclinação (Lado):** ${lado}
 > **Carimbo de tempo:** ${timestamp}
 
-**Currículo (descrição do personagem):**
-\`\`\`
-${curriculo}
-\`\`\`
+**Currículo (descrição do personagem):**`;
 
-彡 **Candidatura encaminhada para V.I.S. / R.E.C.**
-*Análise de perfil e verificação de histórico podem ser iniciadas a qualquer momento.*`;
+    const footerText = `
 
-          const MAX = 1900; // margem pra não bater nos 2000 do Discord
-      let safeContent = content;
+_Revisão: V.I.S. / R.E.C. poderão iniciar análise de perfil a qualquer momento._`;
 
-      if (content.length > MAX) {
-        safeContent = content.slice(0, MAX - 40) +
-          '\n[...conteúdo truncado por limite de caracteres do Discord]';
-      }
-      // opcional pra debug:
-      console.log('len original:', content.length, 'len enviado:', safeContent.length);
-        
-      try {
-        const resp = await fetch(WEBHOOK_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ content })
-        });
+    // Limite de descrição do embed ~4096 (vamos usar 3800 de folga)
+    const MAX_DESC = 3800;
+    let trimmedCurriculo = curriculo;
 
-        if (!resp.ok) throw new Error("HTTP " + resp.status);
+    // espaço máximo só para o currículo, levando em conta header + footer
+    const maxCurriculoLen = MAX_DESC - header.length - footerText.length;
 
-        applyMsg.textContent = 'Candidatura enviada com sucesso para o núcleo de recrutamento.';
-        applyMsg.className = 'modal-msg modal-msg-ok';
-        applyForm.reset();
-      } catch (err) {
-        console.error(err);
-        applyMsg.textContent = 'Falha ao enviar. Tente novamente em alguns instantes.';
-        applyMsg.className = 'modal-msg modal-msg-err';
-      }
-    });
-  </script>
+    if (trimmedCurriculo.length > maxCurriculoLen) {
+      const safeLen = Math.max(0, maxCurriculoLen - 60);
+      trimmedCurriculo =
+        trimmedCurriculo.slice(0, safeLen) +
+        '\n[... texto truncado por limite de caracteres do Discord]';
+    }
+
+    const description = `${header}\n\n${trimmedCurriculo}${footerText}`;
+
+    // opcional pra debug
+    console.log('desc len:', description.length);
+
+    const payload = {
+      content: '▋ `✕ ⁝ ILLUSION · NOVA CANDIDATURA`',
+      embeds: [
+        {
+          title: 'Nova candidatura recebida',
+          description: description,
+          color: fffff,
+          footer: {
+            text: 'Illusion • Núcleo de Recrutamento'
+          },
+          timestamp: new Date().toISOString()
+        }
+      ]
+    };
+
+    try {
+      const resp = await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!resp.ok) throw new Error("HTTP " + resp.status);
+
+      applyMsg.textContent = 'Candidatura enviada com sucesso para o núcleo de recrutamento.';
+      applyMsg.className = 'modal-msg modal-msg-ok';
+      applyForm.reset();
+    } catch (err) {
+      console.error(err);
+      applyMsg.textContent = 'Falha ao enviar. Tente novamente em alguns instantes.';
+      applyMsg.className = 'modal-msg modal-msg-err';
+    }
+  });
+</script>
 
 </body>
 </html>
+
 
 
 
