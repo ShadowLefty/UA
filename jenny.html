@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Companion Mod • Downloads Minecraft</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Baixe o Companion Mod para Minecraft. Adicione NPCs companheiros, interações únicas e uma experiência diferente no seu mundo."
+  />
+
+  <!-- Open Graph / Discord Preview -->
+  <meta property="og:title" content="Companion Mod • Minecraft" />
+  <meta
+    property="og:description"
+    content="Adicione companheiros NPC ao Minecraft e deixe sua base mais viva. Downloads seguros para Java e Bedrock."
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://seusite.com" />
+  <meta property="og:image" content="https://via.placeholder.com/800x420" />
+  <meta name="theme-color" content="#111827" />
+
+  <style>
+    :root {
+      --bg: #020617;
+      --bg-elevated: #020617;
+      --card: #020617;
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.1);
+      --accent-strong: rgba(34, 197, 94, 0.24);
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border-soft: rgba(148, 163, 184, 0.35);
+      --danger: #f97373;
+      --danger-soft: rgba(248, 113, 113, 0.12);
+      --radius-lg: 18px;
+      --radius-xl: 26px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.95);
+      --shadow-sm: 0 8px 22px rgba(15, 23, 42, 0.7);
+      --nav-h: 70px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #0b1120 0, #020617 55%);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* Layout base */
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(
+        to bottom,
+        rgba(2, 6, 23, 0.94),
+        rgba(2, 6, 23, 0.84),
+        transparent
+      );
+      border-bottom: 1px solid rgba(15, 23, 42, 0.9);
+      height: var(--nav-h);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      height: 100%;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-pill {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #4ade80, #16a34a 60%);
+      box-shadow: 0 0 30px rgba(34, 197, 94, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #022c22;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      padding: 0.25rem 0;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(to right, #22c55e, #4ade80);
+      border-radius: 999px;
+      transition: width 0.16s ease-out;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .pill-safe {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--muted);
+      background: radial-gradient(circle at top left, #111827, #020617);
+    }
+
+    .btn-primary {
+      border-radius: 999px;
+      border: none;
+      padding: 0.55rem 1.3rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      background: linear-gradient(
+        135deg,
+        #22c55e,
+        #16a34a,
+        #22c55e,
+        #4ade80
+      );
+      background-size: 200% 200%;
+      color: #022c22;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(34, 197, 94, 0.55);
+      transition: transform 0.12s ease-out, box-shadow 0.12s ease-out,
+        background-position 0.7s ease-out;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      background-position: 100% 0;
+      box-shadow: 0 13px 30px rgba(34, 197, 94, 0.7);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: 0 6px 16px rgba(34, 197, 94, 0.6);
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .section {
+      padding: 3.5rem 1.5rem;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* Hero */
+
+    .hero {
+      padding-top: 2.8rem;
+      padding-bottom: 2rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.8fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .eyebrow {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.1rem, 3vw + 0.2rem, 3rem);
+      line-height: 1.1;
+      margin-bottom: 0.9rem;
+    }
+
+    .hero-title span {
+      background: linear-gradient(to right, #22c55e, #4ade80);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-sub {
+      font-size: 0.97rem;
+      color: var(--muted);
+      max-width: 29rem;
+      margin-bottom: 1.7rem;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .badge {
+      font-size: 0.76rem;
+      padding: 0.38rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: radial-gradient(circle at top, #020617, #020617);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 14px rgba(34, 197, 94, 0.85);
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .btn-ghost {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.65);
+      background: rgba(15, 23, 42, 0.9);
+      padding: 0.55rem 1.1rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      transition: background 0.16s ease-out, border-color 0.16s ease-out,
+        transform 0.1s ease-out;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 0.98);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .hero-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .hero-note strong {
+      color: var(--accent);
+    }
+
+    /* Hero - card visual */
+
+    .hero-card {
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: radial-gradient(circle at top left, #0f172a, #020617 52%);
+      box-shadow: var(--shadow-soft);
+      padding: 1.1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-tag {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .hero-tag span:last-child {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      color: var(--muted);
+    }
+
+    .mock-window {
+      border-radius: 16px;
+      background: radial-gradient(circle at top, #111827, #020617);
+      border: 1px solid rgba(30, 64, 175, 0.7);
+      padding: 0.65rem 0.9rem 0.9rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mock-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.7rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .mock-dots {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .mock-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.6);
+    }
+
+    .mock-dot:nth-child(1) {
+      background: #f97373;
+    }
+
+    .mock-dot:nth-child(2) {
+      background: #facc15;
+    }
+
+    .mock-dot:nth-child(3) {
+      background: #22c55e;
+    }
+
+    .mock-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 2fr);
+      gap: 0.9rem;
+    }
+
+    .mock-main-card {
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: radial-gradient(circle at top, #0b1120, #020617);
+      padding: 0.55rem 0.7rem;
+      font-size: 0.8rem;
+    }
+
+    .mock-main-card h3 {
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .mock-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin: 0.4rem 0 0.5rem;
+    }
+
+    .chip {
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.08);
+      border: 1px solid rgba(34, 197, 94, 0.4);
+      font-size: 0.7rem;
+      color: #bbf7d0;
+    }
+
+    .mock-subtext {
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .mock-side {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .mock-pill {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      padding: 0.3rem 0.7rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mock-pill strong {
+      color: var(--text);
+      font-size: 0.78rem;
+    }
+
+    .hero-glow {
+      position: absolute;
+      inset: -40%;
+      opacity: 0.6;
+      background: radial-gradient(
+        circle at 0 0,
+        rgba(34, 197, 94, 0.38),
+        transparent 55%
+      );
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    /* Seções gerais */
+
+    .section-title {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 40rem;
+      margin-bottom: 1.8rem;
+    }
+
+    /* Downloads */
+
+    .downloads-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.2rem;
+    }
+
+    .dl-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: radial-gradient(circle at top, #020617, #020617 60%);
+      padding: 1.1rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .dl-chip {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+    }
+
+    .dl-card h3 {
+      font-size: 1rem;
+    }
+
+    .dl-meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .dl-actions {
+      margin-top: 0.4rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .btn-outline {
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+      background: transparent;
+      padding: 0.45rem 1rem;
+      font-size: 0.82rem;
+      color: #a7f3d0;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: background 0.15s ease-out, transform 0.1s ease-out,
+        box-shadow 0.15s ease-out;
+    }
+
+    .btn-outline:hover {
+      background: var(--accent-soft);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 28px rgba(34, 197, 94, 0.4);
+    }
+
+    .dl-note {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    /* Galeria */
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.8rem;
+    }
+
+    .gallery-item {
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: radial-gradient(circle at top, #020617, #020617);
+      overflow: hidden;
+      position: relative;
+      min-height: 90px;
+    }
+
+    .gallery-thumb {
+      width: 100%;
+      height: 120px;
+      background-image: linear-gradient(
+          135deg,
+          rgba(34, 197, 94, 0.18),
+          transparent
+        ),
+        linear-gradient(135deg, #111827, #020617);
+      background-size: cover;
+    }
+
+    .gallery-caption {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 0.4rem 0.5rem;
+      font-size: 0.7rem;
+      background: linear-gradient(
+        to top,
+        rgba(15, 23, 42, 0.95),
+        rgba(15, 23, 42, 0)
+      );
+      color: var(--muted);
+    }
+
+    /* Como instalar / FAQ */
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.4fr);
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .steps {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      font-size: 0.9rem;
+    }
+
+    .steps li {
+      position: relative;
+      padding-left: 1.6rem;
+      color: var(--muted);
+    }
+
+    .steps li::before {
+      content: counter(step);
+      counter-increment: step;
+      position: absolute;
+      left: 0;
+      top: 0.18rem;
+      width: 1.05rem;
+      height: 1.05rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: #020617;
+    }
+
+    .steps strong {
+      color: var(--text);
+    }
+
+    .faq {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      background: radial-gradient(circle at top left, #020617, #020617);
+      padding: 1.1rem;
+      font-size: 0.88rem;
+    }
+
+    .faq-item + .faq-item {
+      border-top: 1px solid rgba(31, 41, 55, 0.85);
+      margin-top: 0.7rem;
+      padding-top: 0.7rem;
+    }
+
+    .faq-q {
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .faq-a {
+      color: var(--muted);
+    }
+
+    /* Aviso de conteúdo / segurança */
+
+    .notice {
+      margin-top: 1rem;
+      border-radius: var(--radius-lg);
+      border: 1px dashed rgba(248, 113, 113, 0.5);
+      background: radial-gradient(circle at top left, #451a1a, #020617);
+      padding: 0.9rem 1rem;
+      font-size: 0.78rem;
+      color: #fecaca;
+      display: flex;
+      gap: 0.7rem;
+      align-items: flex-start;
+    }
+
+    .notice-icon {
+      font-size: 1rem;
+      margin-top: 0.1rem;
+    }
+
+    /* Rodapé */
+
+    footer {
+      border-top: 1px solid rgba(15, 23, 42, 0.95);
+      padding: 1.5rem 1.5rem 2rem;
+      margin-top: 1rem;
+      background: radial-gradient(circle at bottom, #020617, #020617);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      font-size: 0.78rem;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.8rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+    }
+
+    .footer-links a:hover {
+      color: var(--text);
+    }
+
+    /* Responsivo */
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-card {
+        order: -1;
+      }
+
+      .downloads-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .two-col {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .section {
+        padding-inline: 1.1rem;
+      }
+
+      .nav-inner {
+        padding-inline: 1.1rem;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- NAV -->
+    <header class="nav">
+      <div class="nav-inner">
+        <div class="nav-left">
+          <div class="logo-pill">CM</div>
+          <div class="brand-text">
+            <span class="brand-title">Companion Mod</span>
+            <span class="brand-sub">Para Minecraft Java & Bedrock</span>
+          </div>
+        </div>
+
+        <nav class="nav-links">
+          <a href="#downloads">Downloads</a>
+          <a href="#gallery">Galeria</a>
+          <a href="#install">Como instalar</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+
+        <div class="nav-cta">
+          <span class="pill-safe">Downloads seguros</span>
+          <button class="btn-primary" onclick="document.getElementById('downloads').scrollIntoView({behavior:'smooth'})">
+            Baixar agora
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section class="section hero">
+        <div class="section-inner hero-grid">
+          <div>
+            <div class="eyebrow">Minecraft • Companions</div>
+            <h1 class="hero-title">
+              Baixe o <span>Companion Mod</span> e deixe sua base mais viva.
+            </h1>
+            <p class="hero-sub">
+              Adicione NPCs companheiros que podem seguir você, ficar perto da
+              base, reagir às suas ações e deixar o mundo com mais personalidade
+              — sem quebrar o equilíbrio do jogo.
+            </p>
+
+            <div class="hero-badges">
+              <div class="badge">
+                <span class="badge-dot"></span>
+                Compatível com Java 1.20+ e ports para Bedrock
+              </div>
+              <div class="badge">Instalação guiada passo a passo</div>
+              <div class="badge">Downloads testados pela comunidade</div>
+            </div>
+
+            <div class="hero-cta-row">
+              <button
+                class="btn-primary"
+                onclick="document.getElementById('downloads').scrollIntoView({behavior:'smooth'})"
+              >
+                Download imediato
+              </button>
+              <button
+                class="btn-ghost"
+                onclick="document.getElementById('install').scrollIntoView({behavior:'smooth'})"
+              >
+                Ver como instalar
+              </button>
+            </div>
+
+            <p class="hero-note">
+              <strong>Atenção:</strong> sempre faça backup dos seus mundos
+              antes de testar qualquer mod.
+            </p>
+          </div>
+
+          <aside class="hero-card" aria-hidden="true">
+            <div class="hero-glow"></div>
+            <div class="hero-tag">
+              <span>Preview do Companion Mod</span>
+              <span>Java &amp; Bedrock</span>
+            </div>
+            <div class="mock-window">
+              <div class="mock-header">
+                <div class="mock-dots">
+                  <div class="mock-dot"></div>
+                  <div class="mock-dot"></div>
+                  <div class="mock-dot"></div>
+                </div>
+                <span>worlds/companions-base</span>
+              </div>
+              <div class="mock-body">
+                <div class="mock-main-card">
+                  <h3>NPC Companion</h3>
+                  <p class="mock-subtext">
+                    Um personagem que pode te seguir, ficar pela sua base e
+                    reagir a pequenos gestos (presentes, aproximação etc.).
+                  </p>
+                  <div class="mock-chip-row">
+                    <span class="chip">Follow / Stay / Wander</span>
+                    <span class="chip">Emotes &amp; idle</span>
+                    <span class="chip">Configuração rápida</span>
+                  </div>
+                  <p class="mock-subtext">
+                    Perfeito para quem quer um mundo mais “vivo” sem cheats
+                    pesados ou automações quebradas.
+                  </p>
+                </div>
+                <div class="mock-side">
+                  <div class="mock-pill">
+                    <span>Instalado via</span>
+                    <strong>Forge / Addon</strong>
+                  </div>
+                  <div class="mock-pill">
+                    <span>Modo de jogo</span>
+                    <strong>Singleplayer / Servidor</strong>
+                  </div>
+                  <div class="mock-pill">
+                    <span>Impacto de desempenho</span>
+                    <strong>Leve</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- DOWNLOADS -->
+      <section class="section" id="downloads">
+        <div class="section-inner">
+          <h2 class="section-title">Downloads do Companion Mod</h2>
+          <p class="section-sub">
+            Escolha a edição do seu jogo. As builds para Java e Bedrock são
+            separadas para evitar erros de compatibilidade. Leia as notas antes
+            de instalar.
+          </p>
+
+          <div class="downloads-grid">
+            <article class="dl-card">
+              <div class="dl-chip">Minecraft: Java Edition</div>
+              <h3>Versão Java</h3>
+              <p class="dl-meta">
+                Para PC (Windows, macOS e Linux). Compatível com as principais
+                versões 1.20+ do jogo com Forge instalado.
+              </p>
+              <div class="dl-actions">
+                <button class="btn-outline">
+                  Baixar .jar
+                  <span>↯</span>
+                </button>
+                <span class="dl-note">Requer Forge instalado</span>
+              </div>
+            </article>
+
+            <article class="dl-card">
+              <div class="dl-chip">Minecraft: Bedrock / MCPE</div>
+              <h3>Versão Bedrock / MCPE</h3>
+              <p class="dl-meta">
+                Addon em formato .mcaddon / .mcpack para dispositivos móveis e
+                plataformas que usam Bedrock Edition.
+              </p>
+              <div class="dl-actions">
+                <button class="btn-outline">
+                  Baixar addon
+                  <span>↯</span>
+                </button>
+                <span class="dl-note">Importe direto pelo jogo</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- GALERIA -->
+      <section class="section" id="gallery">
+        <div class="section-inner">
+          <h2 class="section-title">Galeria rápida</h2>
+          <p class="section-sub">
+            Alguns exemplos de como o Companion Mod pode aparecer no seu mundo:
+            base mais viva, companheiros andando por perto e pequenas interações
+            espalhadas pelo mapa.
+          </p>
+
+          <div class="gallery-grid">
+            <div class="gallery-item">
+              <div class="gallery-thumb"></div>
+              <div class="gallery-caption">Companion perto da sua casa</div>
+            </div>
+            <div class="gallery-item">
+              <div class="gallery-thumb"></div>
+              <div class="gallery-caption">Base com NPCs em idle</div>
+            </div>
+            <div class="gallery-item">
+              <div class="gallery-thumb"></div>
+              <div class="gallery-caption">Explorando a floresta</div>
+            </div>
+            <div class="gallery-item">
+              <div class="gallery-thumb"></div>
+              <div class="gallery-caption">Companions em uma vila</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMO INSTALAR / FAQ -->
+      <section class="section" id="install">
+        <div class="section-inner two-col">
+          <div>
+            <h2 class="section-title">Como instalar o Companion Mod</h2>
+            <p class="section-sub">
+              O procedimento muda um pouco entre Java e Bedrock. Use o passo a
+              passo de acordo com a sua edição do jogo.
+            </p>
+
+            <h3 style="font-size: 1rem; margin-bottom: 0.5rem">
+              Para Minecraft Java (Forge)
+            </h3>
+            <ol class="steps" style="counter-reset: step">
+              <li>
+                <strong>Instale o Forge</strong>. Baixe a versão do Forge
+                compatível com a versão do seu jogo e rode o instalador.
+              </li>
+              <li>
+                <strong>Abra o launcher e selecione o perfil Forge</strong> para
+                o jogo criar as pastas necessárias.
+              </li>
+              <li>
+                <strong>Coloque o .jar do mod na pasta <code>mods</code></strong
+                >. No Windows, normalmente está em
+                <code>%appdata%/.minecraft/mods</code>.
+              </li>
+              <li>
+                <strong>Inicie o jogo com o perfil Forge</strong> e verifique,
+                no menu de mods, se o Companion Mod está listado.
+              </li>
+              <li>
+                <strong>Crie um mundo de teste</strong> para garantir que está
+                tudo funcionando antes de abrir seu mapa principal.
+              </li>
+            </ol>
+
+            <h3
+              style="
+                font-size: 1rem;
+                margin-top: 1.5rem;
+                margin-bottom: 0.5rem;
+              "
+            >
+              Para Bedrock / MCPE
+            </h3>
+            <ol class="steps" style="counter-reset: step">
+              <li>
+                <strong>Baixe o arquivo .mcaddon / .mcpack</strong> do Companion
+                Mod.
+              </li>
+              <li>
+                <strong>Abra o arquivo</strong>. O Minecraft deve iniciar e
+                importar o addon automaticamente.
+              </li>
+              <li>
+                <strong>Edite o mundo em que quer usar o mod</strong> e ative o
+                pacote em “Behavior Packs” e/ou “Resource Packs”.
+              </li>
+              <li>
+                <strong>Inicie o mundo</strong> e teste se os companions estão
+                disponíveis de acordo com o guia do mod.
+              </li>
+            </ol>
+
+            <div class="notice">
+              <div class="notice-icon">⚠️</div>
+              <div>
+                <strong>Importante:</strong> sempre faça backup dos seus mundos
+                e leia as notas do autor do mod. Mods podem causar conflitos com
+                outros pacotes ou versões específicas do jogo.
+              </div>
+            </div>
+          </div>
+
+          <div id="faq">
+            <h2 class="section-title" style="margin-bottom: 0.9rem">FAQ</h2>
+            <div class="faq">
+              <div class="faq-item">
+                <p class="faq-q">
+                  O Companion Mod funciona em qualquer servidor?
+                </p>
+                <p class="faq-a">
+                  Depende das configurações do servidor e dos plugins usados.
+                  Em geral, apenas servidores que permitem mods ou addons
+                  específicos irão aceitar o Companion Mod.
+                </p>
+              </div>
+              <div class="faq-item">
+                <p class="faq-q">
+                  O mod deixa o jogo muito pesado ou com lag?
+                </p>
+                <p class="faq-a">
+                  O foco é ser leve, mas cada NPC é uma entidade a mais no
+                  mundo. Se você já tem muitos mobs ou outras automações, evite
+                  exagerar na quantidade de companions.
+                </p>
+              </div>
+              <div class="faq-item">
+                <p class="faq-q">
+                  Posso usar o mod em série, stream ou vídeo?
+                </p>
+                <p class="faq-a">
+                  Em geral, sim, mas sempre confira as regras do autor do mod e
+                  as políticas da plataforma onde você vai postar (YouTube,
+                  Twitch etc.).
+                </p>
+              </div>
+              <div class="faq-item">
+                <p class="faq-q">
+                  O que fazer se o jogo fechar ou travar ao instalar?
+                </p>
+                <p class="faq-a">
+                  Verifique se a versão do jogo, do Forge e do mod são
+                  compatíveis. Se o problema continuar, remova temporariamente
+                  outros mods para ver se há conflito.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-inner">
+        <span>© <span id="year"></span> Companion Mod • Projeto de fã não oficial.</span>
+        <div class="footer-links">
+          <a href="#downloads">Downloads</a>
+          <a href="#install">Guia de instalação</a>
+          <a href="#faq">Perguntas frequentes</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
